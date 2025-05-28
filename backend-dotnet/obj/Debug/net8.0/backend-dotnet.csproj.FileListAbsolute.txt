@@ -31,3 +31,4 @@ C:\Users\dandi\react\portfolio-web\backend-dotnet\obj\Debug\net8.0\refint\backen
 C:\Users\dandi\react\portfolio-web\backend-dotnet\obj\Debug\net8.0\backend-dotnet.pdb
 C:\Users\dandi\react\portfolio-web\backend-dotnet\obj\Debug\net8.0\backend-dotnet.genruntimeconfig.cache
 C:\Users\dandi\react\portfolio-web\backend-dotnet\obj\Debug\net8.0\ref\backend-dotnet.dll
+C:\Users\dandi\react\portfolio-web\backend-dotnet\obj\Debug\net8.0\backend-dotnet.sourcelink.json
