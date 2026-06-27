@@ -482,19 +482,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\dandi\\.nuget\\packages\\": {}
+    "C:\\Users\\ASUS\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\dandi\\react\\portfolio-web\\backend-dotnet\\backend-dotnet.csproj",
+      "projectUniqueName": "C:\\Users\\ASUS\\Documents\\GitHub\\portfolio-web\\backend-dotnet\\backend-dotnet.csproj",
       "projectName": "backend-dotnet",
-      "projectPath": "C:\\Users\\dandi\\react\\portfolio-web\\backend-dotnet\\backend-dotnet.csproj",
-      "packagesPath": "C:\\Users\\dandi\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\dandi\\react\\portfolio-web\\backend-dotnet\\obj\\",
+      "projectPath": "C:\\Users\\ASUS\\Documents\\GitHub\\portfolio-web\\backend-dotnet\\backend-dotnet.csproj",
+      "packagesPath": "C:\\Users\\ASUS\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\ASUS\\Documents\\GitHub\\portfolio-web\\backend-dotnet\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\dandi\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\ASUS\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
@@ -512,6 +512,11 @@
         "warnAsError": [
           "NU1605"
         ]
+      },
+      "restoreAuditProperties": {
+        "enableAudit": "true",
+        "auditLevel": "low",
+        "auditMode": "direct"
       }
     },
     "frameworks": {
@@ -546,7 +551,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.115/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.422/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
