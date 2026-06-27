@@ -1,43 +1,65 @@
-// src/components/ProjectCard.jsx
-
 function ProjectCard({ project }) {
   return (
-    <div className="border p-4 rounded-lg shadow-md bg-white">
-      <h2 className="text-xl font-semibold text-gray-800">{project.title}</h2>
-      <p className="text-sm text-gray-500">{project.date}</p>
-      <p className="my-2 text-gray-700">{project.description}</p>
+    <article className="project-card h-100">
+      <div className="project-visual">
+        <span>{project.visualLabel}</span>
+      </div>
 
-      {project.mediaType === "image" ? (
-        <img
-          src={project.mediaUrl}
-          alt={project.title}
-          className="w-full mt-2 rounded"
-        />
-      ) : (
-      <div className="ratio ratio-16x9 mt-2">
-      <iframe
-        src="https://www.youtube.com/embed/BgdbVdX4MNU"
-        title="Clean.id Videos"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-        referrerPolicy="strict-origin-when-cross-origin"
-        allowFullScreen
-      ></iframe>
-    </div>
+      <div className="project-card-body">
+        <div className="d-flex flex-wrap gap-2 mb-3">
+          <span className="project-badge">{project.category}</span>
+          <span className="project-badge muted">{project.year}</span>
+        </div>
 
+        <p className="project-type">{project.type}</p>
+        <h3>{project.title}</h3>
+        <p className="project-context">{project.context}</p>
 
-      )}
+        <div className="case-grid">
+          <div>
+            <strong>Problem</strong>
+            <p>{project.problem}</p>
+          </div>
+          <div>
+            <strong>Solution</strong>
+            <p>{project.solution}</p>
+          </div>
+        </div>
 
-      {project.projectUrl && (
-        <a
-          href={project.projectUrl}
-          className="text-blue-600 mt-2 inline-block"
-          target="_blank"
-          rel="noreferrer"
-        >
-          🔗 Lihat Proyek
-        </a>
-      )}
-    </div>
+        <div className="mt-3">
+          <strong className="small-heading">My Role</strong>
+          <p className="mb-2">{project.role}</p>
+          <div className="tag-list mb-3">
+            {project.tools.map((tool) => (
+              <span key={tool}>{tool}</span>
+            ))}
+          </div>
+        </div>
+
+        <details className="project-details">
+          <summary>View responsibilities</summary>
+          <ul>
+            {project.responsibilities.map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
+        </details>
+
+        <div className="d-flex flex-wrap gap-2 mt-4">
+          {project.links.map((link) =>
+            link.url ? (
+              <a key={link.label} href={link.url} className="btn btn-dark btn-sm rounded-pill" target="_blank" rel="noreferrer">
+                {link.label}
+              </a>
+            ) : (
+              <button key={link.label} className="btn btn-outline-secondary btn-sm rounded-pill" disabled>
+                {link.label}
+              </button>
+            )
+          )}
+        </div>
+      </div>
+    </article>
   );
 }
 

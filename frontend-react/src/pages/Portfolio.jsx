@@ -1,40 +1,51 @@
-// src/pages/Portfolio.jsx
-
+import { useMemo, useState } from "react";
 import ProjectCard from "../components/ProjectCard";
-import portfolioImg from "../assets/images/portfolio.png"; // Gambar lokal, ganti sesuai file kamu
-// import videoThumb from "../assets/images/video-project.jpg"; 
+import SectionTitle from "../components/SectionTitle";
+import { projects } from "../data/portfolioData";
+
+const filters = ["All", "UI/UX Design", "IT & Data", "Video & Game"];
 
 function Portfolio() {
-  const projects = [
-    {
-      title: "Website Portofolio",
-      date: "Mei 2025",
-      description: "Sebuah website pribadi untuk menampilkan karya dan projek saya menggunakan React dan ASP.NET Core.",
-      mediaType: "image",
-      mediaUrl: portfolioImg,
-      projectUrl: "https://www.youtube.com/@dandirayo",
-    },
-    {
-      title: "Video Promosi Produk",
-      date: "April 2025",
-      description: "Video promosi berdurasi 1 menit untuk media sosial menggunakan After Effects.",
-      mediaType: "video",
-      mediaUrl: "https://www.youtube.com/watch?v=BgdbVdX4MNU",
-      projectUrl: "https://www.youtube.com/@dandirayo",
-    },
-  ];
+  const [activeFilter, setActiveFilter] = useState("All");
+
+  const filteredProjects = useMemo(() => {
+    if (activeFilter === "All") return projects;
+    return projects.filter((project) => project.category === activeFilter);
+  }, [activeFilter]);
 
   return (
-    <div className="container py-5">
-      <h2 className="text-center text-2xl font-bold mb-6 text-gray-800">
-        Portofolio Proyek
-      </h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {projects.map((project, index) => (
-          <ProjectCard key={index} project={project} />
-        ))}
-      </div>
-    </div>
+    <main className="page-shell">
+      <section className="section-padding">
+        <div className="container">
+          <SectionTitle
+            eyebrow="Portfolio"
+            title="Case studies connected to my CV experience."
+            description="Each card is structured as context, problem, solution, role, tools, and evidence link placeholders."
+          />
+
+          <div className="filter-bar justify-content-center mb-5">
+            {filters.map((filter) => (
+              <button
+                key={filter}
+                type="button"
+                className={`btn rounded-pill ${activeFilter === filter ? "btn-dark" : "btn-outline-dark"}`}
+                onClick={() => setActiveFilter(filter)}
+              >
+                {filter}
+              </button>
+            ))}
+          </div>
+
+          <div className="row g-4">
+            {filteredProjects.map((project) => (
+              <div className="col-lg-6" key={project.id}>
+                <ProjectCard project={project} />
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    </main>
   );
 }
 
