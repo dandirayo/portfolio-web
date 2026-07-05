@@ -1,3 +1,8 @@
+import profilePlaceholder from "../assets/images/generated/profile-placeholder.webp";
+import projectCreative from "../assets/images/generated/project-creative.webp";
+import projectItData from "../assets/images/generated/project-it-data.webp";
+import projectUiux from "../assets/images/generated/project-uiux.webp";
+
 export const profile = {
   name: "Dandi Prayogatama",
   title: "Technical Support L2 | UI/UX Designer | Creative Technologist",
@@ -12,6 +17,7 @@ export const profile = {
   github: "https://github.com/dandirayo",
   portfolioNode: "dandirayo.art",
   cvUrl: "/cv-dandi-prayogatama.pdf",
+  image: profilePlaceholder,
 };
 
 export const expertise = [
@@ -46,6 +52,7 @@ export const projects = [
     year: "2023",
     type: "Thesis Project",
     visualLabel: "Mobile app mockup / Figma prototype",
+    image: projectUiux,
     context:
       "Designed an end-to-end mobile donation application to help donors contribute goods to social foundations in a simpler and more accessible way.",
     problem:
@@ -74,6 +81,7 @@ export const projects = [
     year: "2021",
     type: "Kampus Merdeka Internship",
     visualLabel: "Low-fi to high-fi comparison",
+    image: projectUiux,
     context:
       "Conducted research and interface design for an Android paraphrasing tool, focused on usability, readability, and user engagement.",
     problem:
@@ -99,6 +107,7 @@ export const projects = [
     year: "2021 - 2022",
     type: "PT. Agate International Internship",
     visualLabel: "Gameplay clip / UI screen recording",
+    image: projectCreative,
     context:
       "Translated game concepts into design documents, UI prototypes, and Unity-based interactive implementations.",
     problem:
@@ -124,6 +133,7 @@ export const projects = [
     year: "2025 - Present",
     type: "PT. Bank Negara Indonesia",
     visualLabel: "Non-sensitive system flowchart",
+    image: projectItData,
     context:
       "Supporting banking systems and applications through L2 troubleshooting, escalation handling, monitoring, and system testing.",
     problem:
@@ -149,6 +159,7 @@ export const projects = [
     year: "Course Project",
     type: "G2Academy",
     visualLabel: "Tableau dashboard / Python notebook",
+    image: projectItData,
     context:
       "Applied data cleaning, exploratory data analysis, Python scripting, machine learning basics, SQL, and Tableau visualization.",
     problem:
@@ -174,6 +185,7 @@ export const projects = [
     year: "2024",
     type: "PT. Reycom Document Solusi",
     visualLabel: "Print layout samples",
+    image: projectCreative,
     context:
       "Designed and prepared envelope, map, certificate, case, and cover materials while organizing warehouse data in Excel.",
     problem:
@@ -198,6 +210,7 @@ export const projects = [
     year: "2024",
     type: "Rich Music Freelance",
     visualLabel: "Instagram video / showreel",
+    image: projectCreative,
     context:
       "Produced and edited short-form music/event content for social media using camera production and post-production tools.",
     problem:

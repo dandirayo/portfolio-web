@@ -1,7 +1,8 @@
 function ProjectCard({ project }) {
   return (
     <article className="project-card h-100">
-      <div className="project-visual">
+      <div className={`project-visual ${project.image ? "has-image" : ""}`}>
+        {project.image && <img src={project.image} alt="" loading="lazy" />}
         <span>{project.visualLabel}</span>
       </div>
 

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
+import { apiEndpoints } from "../config/api";
 import { profile } from "../data/portfolioData";
 
 const initialForm = {
@@ -20,8 +21,19 @@ function ContactForm() {
     event.preventDefault();
     setStatus({ type: "loading", message: "Sending message..." });
 
+    const payload = {
+      name: formData.name.trim(),
+      email: formData.email.trim(),
+      message: formData.message.trim(),
+    };
+
+    if (!payload.name || !payload.email || !payload.message) {
+      setStatus({ type: "error", message: "Please fill in all fields before sending." });
+      return;
+    }
+
     try {
-      await axios.post("http://localhost:5050/api/contact", formData);
+      await axios.post(apiEndpoints.contact, payload);
       setStatus({ type: "success", message: "Message received. Thank you for reaching out." });
       setFormData(initialForm);
     } catch (error) {
@@ -29,7 +41,7 @@ function ContactForm() {
       setStatus({
         type: "error",
         message:
-          "The local backend is not responding yet. You can still contact me directly by email.",
+          "The contact service is not ready yet. You can still contact me directly by email.",
       });
     }
   };
@@ -46,6 +58,7 @@ function ContactForm() {
             placeholder="Your name"
             value={formData.name}
             onChange={handleChange}
+            maxLength="100"
             required
           />
         </div>
@@ -58,6 +71,7 @@ function ContactForm() {
             placeholder="your@email.com"
             value={formData.email}
             onChange={handleChange}
+            maxLength="254"
             required
           />
         </div>
@@ -70,6 +84,7 @@ function ContactForm() {
             placeholder="Tell me about your project, issue, or collaboration idea."
             value={formData.message}
             onChange={handleChange}
+            maxLength="2000"
             required
           ></textarea>
         </div>

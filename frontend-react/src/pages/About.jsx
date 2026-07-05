@@ -9,9 +9,9 @@ function About() {
           <div className="row align-items-center gy-5">
             <div className="col-lg-5">
               <div className="portrait-card">
-                <div className="portrait-placeholder">Add Profile Photo</div>
+                <img className="portrait-image" src={profile.image} alt="Abstract profile visual for Dandi Prayogatama" />
                 <p className="mb-0">
-                  Replace this block with your professional photo. Use a clean background, chest-up crop, and natural lighting.
+                  A portfolio shaped around reliable systems, clear interfaces, and practical creative execution.
                 </p>
               </div>
             </div>

@@ -1,3 +1,6 @@
+using backend_dotnet.Options;
+using backend_dotnet.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.WebHost.ConfigureKestrel(serverOptions =>
@@ -19,6 +22,9 @@ builder.Services.AddCors(options =>
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.Configure<ContactEmailOptions>(
+    builder.Configuration.GetSection(ContactEmailOptions.SectionName));
+builder.Services.AddTransient<IContactEmailSender, SmtpContactEmailSender>();
 
 var app = builder.Build();
 
