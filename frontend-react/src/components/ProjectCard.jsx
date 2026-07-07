@@ -1,8 +1,16 @@
 function ProjectCard({ project }) {
+  const links = project.links ?? [];
+  const responsibilities = project.responsibilities ?? [];
+  const tools = project.tools ?? [];
+
   return (
     <article className="project-card h-100">
-      <div className={`project-visual ${project.image ? "has-image" : ""}`}>
-        {project.image && <img src={project.image} alt="" loading="lazy" />}
+      <div className={`project-visual ${project.image || project.video ? "has-image" : ""}`}>
+        {project.video ? (
+          <video src={project.video} poster={project.image || undefined} controls muted playsInline preload="metadata" />
+        ) : (
+          project.image && <img src={project.image} alt="" loading="lazy" />
+        )}
         <span>{project.visualLabel}</span>
       </div>
 
@@ -31,7 +39,7 @@ function ProjectCard({ project }) {
           <strong className="small-heading">My Role</strong>
           <p className="mb-2">{project.role}</p>
           <div className="tag-list mb-3">
-            {project.tools.map((tool) => (
+            {tools.map((tool) => (
               <span key={tool}>{tool}</span>
             ))}
           </div>
@@ -40,14 +48,14 @@ function ProjectCard({ project }) {
         <details className="project-details">
           <summary>View responsibilities</summary>
           <ul>
-            {project.responsibilities.map((item) => (
+            {responsibilities.map((item) => (
               <li key={item}>{item}</li>
             ))}
           </ul>
         </details>
 
         <div className="d-flex flex-wrap gap-2 mt-4">
-          {project.links.map((link) =>
+          {links.map((link) =>
             link.url ? (
               <a key={link.label} href={link.url} className="btn btn-dark btn-sm rounded-pill" target="_blank" rel="noreferrer">
                 {link.label}

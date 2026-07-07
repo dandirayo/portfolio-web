@@ -1,17 +1,19 @@
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import ProjectCard from "../components/ProjectCard";
 import SectionTitle from "../components/SectionTitle";
-import { projects } from "../data/portfolioData";
+import { usePortfolioData } from "../hooks/usePortfolioData";
 
 const filters = ["All", "UI/UX Design", "IT & Data", "Video & Game"];
 
 function Portfolio() {
   const [activeFilter, setActiveFilter] = useState("All");
+  const { data } = usePortfolioData();
+  const projects = data.projects ?? [];
 
-  const filteredProjects = useMemo(() => {
-    if (activeFilter === "All") return projects;
-    return projects.filter((project) => project.category === activeFilter);
-  }, [activeFilter]);
+  const filteredProjects =
+    activeFilter === "All"
+      ? projects
+      : projects.filter((project) => project.category === activeFilter);
 
   return (
     <main className="page-shell">

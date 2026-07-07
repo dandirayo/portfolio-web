@@ -6,4 +6,5 @@ export const apiBaseUrl = (
 
 export const apiEndpoints = {
   contact: `${apiBaseUrl}/api/contact`,
+  portfolio: `${apiBaseUrl}/api/portfolio`,
 };

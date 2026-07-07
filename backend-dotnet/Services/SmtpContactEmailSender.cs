@@ -37,10 +37,11 @@ namespace backend_dotnet.Services
             email.From.Add(new MailboxAddress(_options.FromName, _options.EffectiveFromEmail));
             email.To.Add(new MailboxAddress(_options.ToName, _options.ToEmail));
             email.ReplyTo.Add(new MailboxAddress(message.Name, message.Email));
-            email.Subject = $"Portfolio contact request from {message.Name}";
+            email.Subject = $"Portfolio {message.Topic}: {message.Name}";
             email.Body = new TextPart("plain")
             {
                 Text =
+                    $"Topic: {message.Topic}\n" +
                     $"Name: {message.Name}\n" +
                     $"Email: {message.Email}\n\n" +
                     "Message:\n" +

@@ -13,6 +13,7 @@ frontend-react/   React 19 + Vite portfolio frontend
 
 - Node.js and npm
 - .NET 8 SDK
+- XAMPP with MySQL/MariaDB and phpMyAdmin
 
 ## First Setup
 
@@ -34,6 +35,34 @@ The default API URL is:
 ```txt
 VITE_API_BASE_URL=http://localhost:5050
 ```
+
+## Database Setup With XAMPP/phpMyAdmin
+
+Start Apache and MySQL from XAMPP, then open phpMyAdmin:
+
+```txt
+http://localhost/phpmyadmin
+```
+
+Import this SQL file:
+
+```txt
+backend-dotnet/database/portfolio_web.sql
+```
+
+The default backend connection string matches a fresh XAMPP install:
+
+```txt
+Server=localhost;Port=3306;Database=portfolio_web;User=root;Password=;
+```
+
+If your MySQL user/password is different, set this before running the backend:
+
+```powershell
+$env:ConnectionStrings__PortfolioDatabase = "Server=localhost;Port=3306;Database=portfolio_web;User=root;Password=your-password;"
+```
+
+The backend also tries to create and seed the database automatically when MySQL is running. Manual phpMyAdmin import is still useful because you can inspect and edit the data directly.
 
 ## Run Locally
 
@@ -65,7 +94,7 @@ http://localhost:5050/swagger
 
 ## Contact Form Email Delivery
 
-The contact form posts to the backend `/api/contact` endpoint. The backend sends messages through SMTP when these environment variables are configured:
+The contact form posts to the backend `/api/contact` endpoint. Messages are saved to the `contact_submissions` table first. The backend also forwards messages through SMTP when these environment variables are configured:
 
 ```powershell
 $env:ContactEmail__SmtpHost = "smtp.gmail.com"
@@ -79,17 +108,47 @@ $env:ContactEmail__ToEmail = "your-email@gmail.com"
 
 For Gmail, use an App Password instead of your normal account password. For a custom domain email, use the SMTP settings from the email provider.
 
-If SMTP is not configured or delivery fails, the API returns an error and the frontend shows a direct email fallback.
+If SMTP is not configured or delivery fails, the message still stays in phpMyAdmin as long as MySQL is running.
 
-## Main Content File
+## Portfolio Data
 
-Most portfolio content is edited here:
+The frontend loads portfolio data from:
 
 ```txt
-frontend-react/src/data/portfolioData.js
+GET http://localhost:5050/api/portfolio
 ```
 
-Update this file for profile data, skills, timeline entries, project descriptions, and project links.
+Edit these tables in phpMyAdmin:
+
+```txt
+portfolio_profiles
+expertise_items
+portfolio_projects
+skill_groups
+timeline_items
+contact_submissions
+```
+
+`frontend-react/src/data/portfolioData.js` is now the fallback if the backend or MySQL is offline.
+
+## Media Folder
+
+Use public media paths so database values and browser URLs stay in sync:
+
+```txt
+frontend-react/public/media/profile/profile-photo.jpg
+frontend-react/public/media/projects/<project-id>/cover.webp
+frontend-react/public/media/projects/<project-id>/demo.mp4
+frontend-react/public/media/projects/<project-id>/case-study.pdf
+frontend-react/public/media/placeholders/*.webp
+```
+
+Example database values in `portfolio_projects`:
+
+```txt
+ImageUrl = /media/projects/peduli-donasi/cover.webp
+VideoUrl = /media/projects/peduli-donasi/demo.mp4
+```
 
 ## Useful Checks
 
@@ -117,5 +176,5 @@ dotnet build
 ## Notes
 
 - Build artifacts such as `bin/`, `obj/`, `dist/`, and `node_modules/` are ignored by git.
-- The contact form posts to the backend `/api/contact` endpoint.
-- Portfolio project cards use local frontend data in `frontend-react/src/data/portfolioData.js`.
+- The contact form saves messages to MySQL and optionally forwards them through SMTP.
+- Portfolio project cards use backend data first, then local fallback data if the API is offline.

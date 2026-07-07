@@ -1,7 +1,10 @@
 import SectionTitle from "../components/SectionTitle";
-import { profile, skillGroups, timeline } from "../data/portfolioData";
+import { usePortfolioData } from "../hooks/usePortfolioData";
 
 function About() {
+  const { data } = usePortfolioData();
+  const { profile, skillGroups, timeline } = data;
+
   return (
     <main className="page-shell">
       <section className="section-padding">
@@ -41,7 +44,7 @@ function About() {
           <SectionTitle
             eyebrow="Skill Matrix"
             title="Balanced between design, operations, code, and data."
-            description="These percentages are presentation indicators. You can adjust them anytime in src/data/portfolioData.js."
+            description="A practical snapshot of the areas I use across product design, support operations, development, and data work."
           />
           <div className="row g-4 mt-2">
             {skillGroups.map((skill) => (

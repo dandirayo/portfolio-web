@@ -4,6 +4,9 @@ namespace backend_dotnet.Models
 {
     public class ContactMessage
     {
+        [StringLength(80)]
+        public string Topic { get; set; } = "General Question";
+
         [Required]
         [StringLength(100)]
         public string Name { get; set; } = string.Empty;

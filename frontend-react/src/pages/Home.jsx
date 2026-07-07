@@ -1,9 +1,11 @@
 import { Link } from "react-router-dom";
 import SectionTitle from "../components/SectionTitle";
 import ProjectCard from "../components/ProjectCard";
-import { expertise, profile, projects } from "../data/portfolioData";
+import { usePortfolioData } from "../hooks/usePortfolioData";
 
 function Home() {
+  const { data } = usePortfolioData();
+  const { expertise, profile, projects } = data;
   const featuredProjects = projects.filter((project) => project.featured).slice(0, 3);
 
   return (

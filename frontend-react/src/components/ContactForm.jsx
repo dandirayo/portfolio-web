@@ -4,6 +4,7 @@ import { apiEndpoints } from "../config/api";
 import { profile } from "../data/portfolioData";
 
 const initialForm = {
+  topic: "Collaboration Request",
   name: "",
   email: "",
   message: "",
@@ -22,6 +23,7 @@ function ContactForm() {
     setStatus({ type: "loading", message: "Sending message..." });
 
     const payload = {
+      topic: formData.topic.trim(),
       name: formData.name.trim(),
       email: formData.email.trim(),
       message: formData.message.trim(),
@@ -33,8 +35,15 @@ function ContactForm() {
     }
 
     try {
-      await axios.post(apiEndpoints.contact, payload);
-      setStatus({ type: "success", message: "Message received. Thank you for reaching out." });
+      const response = await axios.post(apiEndpoints.contact, payload);
+      const delivery = response.data?.delivery;
+      setStatus({
+        type: "success",
+        message:
+          delivery === "email_sent"
+            ? "Message saved and sent to email. Thank you for reaching out."
+            : "Message saved in the database. Email forwarding can be enabled with SMTP setup.",
+      });
       setFormData(initialForm);
     } catch (error) {
       console.error("Contact form error:", error);
@@ -49,6 +58,19 @@ function ContactForm() {
   return (
     <form onSubmit={handleSubmit} className="contact-form">
       <div className="row g-3">
+        <div className="col-12">
+          <label className="form-label">Topic</label>
+          <select
+            name="topic"
+            className="form-select"
+            value={formData.topic}
+            onChange={handleChange}
+          >
+            <option value="Collaboration Request">Collaboration Request</option>
+            <option value="Project Inquiry">Project Inquiry</option>
+            <option value="General Question">General Question</option>
+          </select>
+        </div>
         <div className="col-md-6">
           <label className="form-label">Name</label>
           <input
