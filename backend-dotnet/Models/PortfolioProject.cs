@@ -13,6 +13,12 @@ namespace backend_dotnet.Models
         public int SortOrder { get; set; }
 
         [Required]
+        [StringLength(100)]
+        public string Slug { get; set; } = string.Empty;
+
+        public int DisplayOrder { get; set; }
+
+        [Required]
         [StringLength(180)]
         public string Title { get; set; } = string.Empty;
 
@@ -29,6 +35,10 @@ namespace backend_dotnet.Models
         public string Type { get; set; } = string.Empty;
 
         [Required]
+        [StringLength(360)]
+        public string Summary { get; set; } = string.Empty;
+
+        [Required]
         [StringLength(160)]
         public string VisualLabel { get; set; } = string.Empty;
 
@@ -37,6 +47,8 @@ namespace backend_dotnet.Models
 
         [StringLength(500)]
         public string VideoUrl { get; set; } = string.Empty;
+
+        public string GalleryJson { get; set; } = "[]";
 
         public string Context { get; set; } = string.Empty;
 
@@ -51,6 +63,16 @@ namespace backend_dotnet.Models
         public string ResponsibilitiesJson { get; set; } = "[]";
 
         public string ToolsJson { get; set; } = "[]";
+
+        public string ResultsJson { get; set; } = "[]";
+
+        public string LessonsLearnedJson { get; set; } = "[]";
+
+        [StringLength(500)]
+        public string GithubUrl { get; set; } = string.Empty;
+
+        [StringLength(500)]
+        public string LiveDemoUrl { get; set; } = string.Empty;
 
         public string LinksJson { get; set; } = "[]";
 

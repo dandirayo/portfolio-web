@@ -39,11 +39,16 @@ namespace backend_dotnet.Data
             {
                 entity.ToTable("portfolio_projects");
                 entity.HasIndex(project => project.ProjectId).IsUnique();
+                entity.HasIndex(project => project.Slug).IsUnique();
+                entity.Property(project => project.Summary).HasColumnType("longtext");
+                entity.Property(project => project.GalleryJson).HasColumnType("longtext");
                 entity.Property(project => project.Context).HasColumnType("longtext");
                 entity.Property(project => project.Problem).HasColumnType("longtext");
                 entity.Property(project => project.Solution).HasColumnType("longtext");
                 entity.Property(project => project.ResponsibilitiesJson).HasColumnType("longtext");
                 entity.Property(project => project.ToolsJson).HasColumnType("longtext");
+                entity.Property(project => project.ResultsJson).HasColumnType("longtext");
+                entity.Property(project => project.LessonsLearnedJson).HasColumnType("longtext");
                 entity.Property(project => project.LinksJson).HasColumnType("longtext");
             });
 

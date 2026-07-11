@@ -1,0 +1,386 @@
+PORTFOLIO WEB - RINGKASAN TEKNIS SEDERHANA
+==========================================
+
+Lokasi proyek:
+C:\Users\ASUS\Documents\GitHub\portfolio-web
+
+
+1. GAMBARAN UMUM
+----------------
+
+Proyek ini adalah website portfolio full-stack.
+
+Strukturnya dibagi menjadi dua bagian utama:
+
+- frontend-react
+  Aplikasi front-end berbasis React dan Vite.
+
+- backend-dotnet
+  Aplikasi back-end berbasis ASP.NET Core Web API.
+
+Front-end menampilkan halaman portfolio, about, contact, dan daftar project.
+Back-end menyediakan API untuk mengambil data portfolio dan menerima pesan dari contact form.
+
+
+2. TECH STACK UTAMA
+-------------------
+
+Front-end:
+
+- React 19
+- Vite 6
+- JavaScript / JSX
+- Bootstrap 5
+- React Router DOM
+- Axios
+- ESLint
+
+Back-end:
+
+- ASP.NET Core 8 Web API
+- C#
+- Entity Framework Core
+- Pomelo EntityFrameworkCore MySQL Provider
+- Swagger / Swashbuckle
+- MailKit untuk SMTP email
+
+Database:
+
+- MariaDB / MySQL
+- Disarankan memakai XAMPP
+- Database default bernama portfolio_web
+
+
+3. STRUKTUR FOLDER
+------------------
+
+portfolio-web/
+
+- frontend-react/
+  Berisi aplikasi React.
+
+- backend-dotnet/
+  Berisi aplikasi ASP.NET Core Web API.
+
+- portfolio-web.sln
+  File solution Visual Studio untuk back-end.
+
+- README.md
+  Dokumentasi utama proyek.
+
+
+Struktur front-end:
+
+frontend-react/
+
+- src/
+  Kode utama aplikasi React.
+
+- src/pages/
+  Halaman aplikasi:
+  Home, Portfolio, About, Contact.
+
+- src/components/
+  Komponen UI:
+  Navbar, Footer, ProjectCard, ContactForm, SectionTitle.
+
+- src/hooks/
+  Hook untuk mengambil data portfolio dari API.
+
+- src/config/
+  Konfigurasi base URL API.
+
+- src/data/
+  Data fallback lokal jika API atau database tidak aktif.
+
+- public/
+  Asset publik seperti PDF CV dan gambar placeholder.
+
+
+Struktur back-end:
+
+backend-dotnet/
+
+- Controllers/
+  Controller API:
+  PortfolioController dan ContactController.
+
+- Data/
+  DbContext dan initializer database.
+
+- Models/
+  Model entity database.
+
+- Dtos/
+  Bentuk data response API.
+
+- Options/
+  Binding konfigurasi database dan email.
+
+- Services/
+  Service untuk pengiriman email SMTP.
+
+- database/
+  File SQL portfolio_web.sql untuk import database.
+
+
+4. DEPENDENCY PENTING
+---------------------
+
+Front-end dependency:
+
+- react: 19.1.0
+- react-dom: 19.1.0
+- vite: 6.3.5
+- bootstrap: 5.3.6
+- axios: 1.9.0
+- react-router-dom: 6.30.1
+- eslint: 9.x
+
+Back-end dependency:
+
+- .NET target framework: net8.0
+- MailKit: 4.17.0
+- Microsoft.AspNetCore.OpenApi: 8.0.15
+- Pomelo.EntityFrameworkCore.MySql: 9.0.0
+- Swashbuckle.AspNetCore: 6.6.2
+
+
+5. TOOLS YANG PERLU DIINSTALL
+-----------------------------
+
+Wajib:
+
+- Node.js
+  Disarankan Node.js 18 ke atas.
+
+- npm
+  Biasanya otomatis terinstall bersama Node.js.
+
+- .NET 8 SDK
+  Dibutuhkan untuk menjalankan back-end.
+
+- XAMPP
+  Dibutuhkan untuk menjalankan MariaDB/MySQL dan phpMyAdmin.
+
+- Browser
+  Contoh: Chrome, Edge, Firefox.
+
+Opsional:
+
+- Git
+  Untuk clone repository dan version control.
+
+- Visual Studio atau Visual Studio Code
+  Untuk membuka dan mengedit proyek.
+
+
+6. PORT DAN URL LOKAL
+---------------------
+
+Front-end:
+
+http://localhost:5173
+
+Back-end:
+
+http://localhost:5050
+
+Swagger API:
+
+http://localhost:5050/swagger
+
+phpMyAdmin:
+
+http://localhost/phpmyadmin
+
+
+7. KONFIGURASI DATABASE
+-----------------------
+
+Connection string default:
+
+Server=localhost;Port=3306;Database=portfolio_web;User=root;Password=;
+
+Database default:
+
+portfolio_web
+
+File SQL untuk import manual:
+
+backend-dotnet/database/portfolio_web.sql
+
+Catatan:
+
+Back-end juga punya fitur auto initialize database.
+Jika MySQL/MariaDB aktif, aplikasi akan mencoba membuat dan mengisi database awal secara otomatis.
+
+
+8. CARA SETUP PERTAMA KALI
+--------------------------
+
+Buka PowerShell, lalu masuk ke folder proyek:
+
+cd C:\Users\ASUS\Documents\GitHub\portfolio-web
+
+
+Install dependency front-end:
+
+cd frontend-react
+npm.cmd install
+
+
+Buat file environment front-end:
+
+Copy-Item .env.example .env
+
+
+Isi default .env:
+
+VITE_API_BASE_URL=http://localhost:5050
+
+
+Restore dan build back-end:
+
+cd ..\backend-dotnet
+dotnet restore
+dotnet build
+
+
+9. SETUP DATABASE
+-----------------
+
+1. Buka XAMPP Control Panel.
+2. Start MySQL.
+3. Start Apache jika ingin memakai phpMyAdmin.
+4. Buka:
+
+   http://localhost/phpmyadmin
+
+5. Import file:
+
+   C:\Users\ASUS\Documents\GitHub\portfolio-web\backend-dotnet\database\portfolio_web.sql
+
+Alternatif:
+
+Jalankan saja back-end.
+Jika MySQL aktif, back-end akan mencoba membuat database dan seed data secara otomatis.
+
+
+10. CARA MENJALANKAN PROYEK
+---------------------------
+
+Terminal 1 - jalankan back-end:
+
+cd C:\Users\ASUS\Documents\GitHub\portfolio-web\backend-dotnet
+$env:ASPNETCORE_ENVIRONMENT = "Development"
+dotnet run --launch-profile http
+
+
+Terminal 2 - jalankan front-end:
+
+cd C:\Users\ASUS\Documents\GitHub\portfolio-web\frontend-react
+npm.cmd run dev -- --port 5173
+
+
+Buka website:
+
+http://localhost:5173
+
+
+Buka Swagger:
+
+http://localhost:5050/swagger
+
+
+11. ENDPOINT API UTAMA
+----------------------
+
+GET /api/portfolio
+
+Mengambil semua data portfolio.
+
+
+GET /api/portfolio/projects
+
+Mengambil daftar project.
+
+
+GET /api/portfolio/projects/{projectId}
+
+Mengambil detail project berdasarkan projectId.
+
+
+POST /api/contact
+
+Menerima pesan dari contact form.
+Pesan akan disimpan ke tabel contact_submissions.
+Jika SMTP dikonfigurasi, pesan juga bisa dikirim ke email.
+
+
+12. CATATAN PENTING
+-------------------
+
+- Front-end tetap bisa tampil walaupun back-end atau database mati.
+  Hal ini karena ada data fallback lokal di src/data/portfolioData.js.
+
+- Contact form membutuhkan back-end dan database agar pesan bisa tersimpan.
+
+- Pengiriman email lewat contact form membutuhkan konfigurasi SMTP.
+
+- Di PowerShell Windows, gunakan npm.cmd, bukan npm, jika terkena masalah execution policy.
+
+- File backend-dotnet.http masih mengarah ke contoh /weatherforecast.
+  Endpoint itu tidak ada di proyek ini.
+  Untuk testing API, lebih baik gunakan Swagger.
+
+
+13. PERINTAH CEK
+----------------
+
+Cek build front-end:
+
+cd C:\Users\ASUS\Documents\GitHub\portfolio-web\frontend-react
+npm.cmd run build
+
+
+Cek lint front-end:
+
+cd C:\Users\ASUS\Documents\GitHub\portfolio-web\frontend-react
+npm.cmd run lint
+
+
+Cek build back-end:
+
+cd C:\Users\ASUS\Documents\GitHub\portfolio-web\backend-dotnet
+dotnet build
+
+
+14. HASIL VERIFIKASI
+--------------------
+
+Perintah yang sudah dicek:
+
+- dotnet restore: sukses
+- dotnet build: sukses
+- npm.cmd run lint: sukses
+- npm.cmd run build: sukses
+
+
+15. KESIMPULAN
+--------------
+
+Proyek ini adalah portfolio web full-stack dengan React/Vite sebagai front-end dan ASP.NET Core 8 sebagai back-end.
+
+Untuk menjalankannya secara penuh, komputer perlu memiliki:
+
+- Node.js dan npm
+- .NET 8 SDK
+- XAMPP dengan MariaDB/MySQL
+
+Urutan menjalankan:
+
+1. Start MySQL dari XAMPP.
+2. Jalankan back-end di port 5050.
+3. Jalankan front-end di port 5173.
+4. Buka http://localhost:5173.

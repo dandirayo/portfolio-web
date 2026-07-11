@@ -29,25 +29,39 @@ namespace backend_dotnet.Dtos
 
     public record ProjectDto(
         string Id,
+        string Slug,
         string Title,
+        string Summary,
         string Category,
         string Year,
         string Type,
         string VisualLabel,
         string Image,
         string Video,
+        IReadOnlyList<ProjectGalleryItemDto> Gallery,
         string Context,
         string Problem,
         string Solution,
         string Role,
         IReadOnlyList<string> Responsibilities,
         IReadOnlyList<string> Tools,
+        IReadOnlyList<string> Results,
+        IReadOnlyList<string> LessonsLearned,
+        string GithubUrl,
+        string LiveDemoUrl,
         IReadOnlyList<ProjectLinkDto> Links,
-        bool Featured);
+        bool Featured,
+        int DisplayOrder);
 
     public record ProjectLinkDto(string Label, string Url);
 
-    public record SkillGroupDto(string Title, int Score, string Tools);
+    public record ProjectGalleryItemDto(
+        string Type,
+        string Url,
+        string Alt,
+        string Caption);
+
+    public record SkillGroupDto(string Title, string Level, string Usage, string Tools);
 
     public record TimelineItemDto(
         string Period,

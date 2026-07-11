@@ -1,3 +1,17 @@
+const placeholderImages = {
+  profile: "/media/placeholders/profile-placeholder.webp",
+  uiux: "/media/placeholders/project-uiux.webp",
+  itData: "/media/placeholders/project-it-data.webp",
+  creative: "/media/placeholders/project-creative.webp",
+};
+
+const galleryItem = (url, alt, caption, type = "image") => ({
+  type,
+  url,
+  alt,
+  caption,
+});
+
 export const profile = {
   name: "Dandi Prayogatama",
   title: "Technical Support L2 | UI/UX Designer | Creative Technologist",
@@ -12,7 +26,7 @@ export const profile = {
   github: "https://github.com/dandirayo",
   portfolioNode: "dandirayo.art",
   cvUrl: "/cv-dandi-prayogatama.pdf",
-  image: "/media/placeholders/profile-placeholder.webp",
+  image: placeholderImages.profile,
 };
 
 export const expertise = [
@@ -42,13 +56,23 @@ export const expertise = [
 export const projects = [
   {
     id: "peduli-donasi",
+    slug: "peduli-donasi",
     title: "Peduli Donasi - Donation Application",
+    summary:
+      "End-to-end UI/UX case study for a mobile donation flow that helps donors understand how to donate goods to social foundations.",
     category: "UI/UX Design",
     year: "2023",
     type: "Thesis Project",
     visualLabel: "Mobile app mockup / Figma prototype",
-    image: "/media/placeholders/project-uiux.webp",
+    image: placeholderImages.uiux,
     video: "",
+    gallery: [
+      galleryItem(
+        placeholderImages.uiux,
+        "Neutral UI UX placeholder for Peduli Donasi",
+        "Replace with real app screens or Figma export."
+      ),
+    ],
     context:
       "Designed an end-to-end mobile donation application to help donors contribute goods to social foundations in a simpler and more accessible way.",
     problem:
@@ -64,21 +88,39 @@ export const projects = [
       "Usability-focused interface design",
     ],
     tools: ["Figma", "UI Research", "Prototype", "Accessibility"],
-    links: [
-      { label: "Add Figma Prototype", url: "" },
-      { label: "Add Case Study PDF", url: "" },
+    results: [
+      "Produced a structured mobile donation flow from research through high-fidelity prototype.",
+      "Clarified donation status and foundation information in the interface concept.",
     ],
+    lessonsLearned: [
+      "Donation products need trust signals and clear status feedback.",
+      "Physical-good donation flows should reduce ambiguity before users commit to an action.",
+    ],
+    githubUrl: "",
+    liveDemoUrl: "",
+    links: [],
     featured: true,
+    displayOrder: 1,
   },
   {
     id: "android-paraphrasing-app",
+    slug: "android-paraphrasing-app",
     title: "Android Paraphrasing Application",
+    summary:
+      "Android UI/UX exploration for a writing-support tool, covering research, wireframes, prototype flow, and usability-oriented refinements.",
     category: "UI/UX Design",
     year: "2021",
     type: "Kampus Merdeka Internship",
     visualLabel: "Low-fi to high-fi comparison",
-    image: "/media/placeholders/project-uiux.webp",
+    image: placeholderImages.uiux,
     video: "",
+    gallery: [
+      galleryItem(
+        placeholderImages.uiux,
+        "Neutral UI UX placeholder for Android paraphrasing app",
+        "Replace with wireframe and prototype screenshots."
+      ),
+    ],
     context:
       "Conducted research and interface design for an Android paraphrasing tool, focused on usability, readability, and user engagement.",
     problem:
@@ -94,18 +136,39 @@ export const projects = [
       "Interactive Figma prototype",
     ],
     tools: ["Figma", "Android Design Guidelines", "Usability Testing"],
-    links: [{ label: "Add Design System Case Study", url: "" }],
+    results: [
+      "Translated writing-support requirements into Android-friendly screen flows.",
+      "Created prototype artifacts that can be reused as portfolio evidence once visuals are available.",
+    ],
+    lessonsLearned: [
+      "Mobile writing tools need low-friction input and readable output states.",
+      "Usability testing is most useful when prototype flows are simple enough for users to finish unaided.",
+    ],
+    githubUrl: "",
+    liveDemoUrl: "",
+    links: [],
     featured: true,
+    displayOrder: 2,
   },
   {
     id: "agate-game-prototype",
+    slug: "agate-game-prototype",
     title: "Interactive Game Prototype",
+    summary:
+      "Prototype-focused game development work combining concept documentation, UI exploration, character/interface design, and Unity implementation.",
     category: "Video & Game",
     year: "2021 - 2022",
     type: "PT. Agate International Internship",
     visualLabel: "Gameplay clip / UI screen recording",
-    image: "/media/placeholders/project-creative.webp",
+    image: placeholderImages.creative,
     video: "",
+    gallery: [
+      galleryItem(
+        placeholderImages.creative,
+        "Neutral creative project placeholder for game prototype",
+        "Replace with gameplay clip, UI screens, or safe prototype screenshots."
+      ),
+    ],
     context:
       "Translated game concepts into design documents, UI prototypes, and Unity-based interactive implementations.",
     problem:
@@ -121,18 +184,39 @@ export const projects = [
       "Playtesting and debugging",
     ],
     tools: ["Unity", "C#", "Figma", "Game Design Document"],
-    links: [{ label: "Add Game Design Documentation", url: "" }],
+    results: [
+      "Converted concept ideas into playable prototype work and supporting documentation.",
+      "Practiced bridging design intent with implementation constraints in Unity.",
+    ],
+    lessonsLearned: [
+      "Prototype scope needs to be small enough for fast testing.",
+      "Game UI decisions become clearer when tested inside an actual interaction loop.",
+    ],
+    githubUrl: "",
+    liveDemoUrl: "",
+    links: [],
     featured: true,
+    displayOrder: 3,
   },
   {
     id: "bni-l2-operations",
+    slug: "technical-support-l2-operations",
     title: "Technical Support L2 Operations",
+    summary:
+      "Non-sensitive case study framing L2 support work: troubleshooting, escalation handling, patch testing, monitoring, and coordination.",
     category: "IT & Data",
     year: "2025 - Present",
     type: "PT. Bank Negara Indonesia",
     visualLabel: "Non-sensitive system flowchart",
-    image: "/media/placeholders/project-it-data.webp",
+    image: placeholderImages.itData,
     video: "",
+    gallery: [
+      galleryItem(
+        placeholderImages.itData,
+        "Neutral IT data placeholder for L2 support operations",
+        "Replace with a non-sensitive workflow diagram only."
+      ),
+    ],
     context:
       "Supporting banking systems and applications through L2 troubleshooting, escalation handling, monitoring, and system testing.",
     problem:
@@ -148,18 +232,39 @@ export const projects = [
       "Vendor and developer coordination",
     ],
     tools: ["Monitoring Tools", "Ticket Reports", "System Testing", "Incident Analysis"],
-    links: [{ label: "Add Methodology Note", url: "" }],
+    results: [
+      "Supported escalated issue handling and cross-team coordination in an L2 operations context.",
+      "Kept the portfolio presentation non-sensitive by focusing on process, role, and communication patterns.",
+    ],
+    lessonsLearned: [
+      "Operational support work should be documented without exposing internal system details.",
+      "Reliable incident handling depends on clear escalation, testing discipline, and concise status reporting.",
+    ],
+    githubUrl: "",
+    liveDemoUrl: "",
+    links: [],
     featured: true,
+    displayOrder: 4,
   },
   {
     id: "data-analytics-g2academy",
+    slug: "data-analytics-predictive-modeling",
     title: "Data Analytics & Predictive Modeling",
+    summary:
+      "Course project portfolio entry covering data cleaning, exploratory analysis, SQL/Python practice, predictive modeling basics, and Tableau visualization.",
     category: "IT & Data",
     year: "Course Project",
     type: "G2Academy",
     visualLabel: "Tableau dashboard / Python notebook",
-    image: "/media/placeholders/project-it-data.webp",
+    image: placeholderImages.itData,
     video: "",
+    gallery: [
+      galleryItem(
+        placeholderImages.itData,
+        "Neutral IT data placeholder for analytics project",
+        "Replace with dashboard screenshot or notebook preview."
+      ),
+    ],
     context:
       "Applied data cleaning, exploratory data analysis, Python scripting, machine learning basics, SQL, and Tableau visualization.",
     problem:
@@ -175,18 +280,39 @@ export const projects = [
       "Tableau visualization",
     ],
     tools: ["SQL", "Python", "Machine Learning", "Tableau"],
-    links: [{ label: "Add GitHub Repository", url: "" }],
+    results: [
+      "Built a practice workflow from raw data preparation to visualization.",
+      "Created a project structure that can later link to a GitHub notebook or dashboard export.",
+    ],
+    lessonsLearned: [
+      "Analysis is easier to communicate when cleaning decisions are documented.",
+      "Dashboards need a clear question before charts become useful.",
+    ],
+    githubUrl: "",
+    liveDemoUrl: "",
+    links: [],
     featured: false,
+    displayOrder: 5,
   },
   {
     id: "reycom-print-design",
+    slug: "reycom-print-production-design",
     title: "Print Production & Warehouse Design",
+    summary:
+      "Production-oriented design work for print materials, supported by Excel-based warehouse data organization.",
     category: "Video & Game",
     year: "2024",
     type: "PT. Reycom Document Solusi",
     visualLabel: "Print layout samples",
-    image: "/media/placeholders/project-creative.webp",
+    image: placeholderImages.creative,
     video: "",
+    gallery: [
+      galleryItem(
+        placeholderImages.creative,
+        "Neutral creative placeholder for print production design",
+        "Replace with approved print samples only."
+      ),
+    ],
     context:
       "Designed and prepared envelope, map, certificate, case, and cover materials while organizing warehouse data in Excel.",
     problem:
@@ -201,18 +327,39 @@ export const projects = [
       "Production accuracy checking",
     ],
     tools: ["Adobe Photoshop", "Adobe Illustrator", "Excel", "Print Production"],
-    links: [{ label: "Add Design Samples", url: "" }],
+    results: [
+      "Prepared print-oriented design assets with attention to production accuracy.",
+      "Connected visual preparation with supporting warehouse data organization.",
+    ],
+    lessonsLearned: [
+      "Print work rewards careful file setup more than decorative complexity.",
+      "Operational data organization can reduce friction in production workflows.",
+    ],
+    githubUrl: "",
+    liveDemoUrl: "",
+    links: [],
     featured: false,
+    displayOrder: 6,
   },
   {
     id: "rich-music-video",
+    slug: "social-media-video-production",
     title: "Social Media Video Production",
+    summary:
+      "Short-form video production and editing work for music/event social media content, covering camera operation and post-production.",
     category: "Video & Game",
     year: "2024",
     type: "Rich Music Freelance",
     visualLabel: "Instagram video / showreel",
-    image: "/media/placeholders/project-creative.webp",
+    image: placeholderImages.creative,
     video: "",
+    gallery: [
+      galleryItem(
+        placeholderImages.creative,
+        "Neutral creative placeholder for social media video production",
+        "Replace with approved clips or showreel thumbnail."
+      ),
+    ],
     context:
       "Produced and edited short-form music/event content for social media using camera production and post-production tools.",
     problem:
@@ -227,31 +374,50 @@ export const projects = [
       "Social media export preparation",
     ],
     tools: ["Sony A7 Mark II", "Photoshop", "CapCut", "Instagram"],
-    links: [{ label: "Add Showreel", url: "" }],
+    results: [
+      "Produced short-form social media video assets from capture through editing.",
+      "Created a portfolio-ready structure for adding showreel links once final clips are approved.",
+    ],
+    lessonsLearned: [
+      "Short-form edits need rhythm, clarity, and fast visual context.",
+      "Approved thumbnails and clips matter as much as written project descriptions for multimedia work.",
+    ],
+    githubUrl: "",
+    liveDemoUrl: "",
+    links: [],
     featured: false,
+    displayOrder: 7,
   },
 ];
 
 export const skillGroups = [
   {
     title: "UI/UX Design & Prototyping",
-    score: 95,
+    level: "Project Experience",
+    usage:
+      "Used for research, wireframes, high-fidelity prototypes, usability-focused flows, and portfolio case study preparation.",
     tools: "Figma, Canva, Adobe Photoshop, Adobe Illustrator",
   },
   {
     title: "IT Support, Infrastructure & Troubleshooting",
-    score: 90,
+    level: "Professional Experience",
+    usage:
+      "Used in L2 support, escalation handling, monitoring, patch/update testing, incident analysis, and reporting.",
     tools: "L2 support, monitoring, escalation, system testing",
   },
   {
     title: "Game Development & Programming",
-    score: 85,
+    level: "Internship / Prototype Experience",
+    usage:
+      "Used for Unity prototypes, C# scripting, game concept documentation, interface prototyping, and debugging.",
     tools: "Unity, C#, Java OOP, HTML, CSS, JavaScript",
   },
   {
     title: "Data Analytics & Scripting",
-    score: 80,
-    tools: "SQL, Python, Tableau, Excel",
+    level: "Course / Practice Experience",
+    usage:
+      "Used for SQL practice, Python analysis, exploratory data work, predictive modeling basics, Tableau, and Excel organization.",
+    tools: "SQL, Python, Machine Learning, Tableau, Excel",
   },
 ];
 

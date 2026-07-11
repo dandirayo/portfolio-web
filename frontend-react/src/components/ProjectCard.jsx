@@ -1,7 +1,14 @@
+import { Link } from "react-router-dom";
+
 function ProjectCard({ project }) {
   const links = project.links ?? [];
-  const responsibilities = project.responsibilities ?? [];
   const tools = project.tools ?? [];
+  const slug = project.slug || project.id;
+  const evidenceLinks = [
+    project.githubUrl && { label: "GitHub", url: project.githubUrl },
+    project.liveDemoUrl && { label: "Live Demo", url: project.liveDemoUrl },
+    ...links.filter((link) => link.url),
+  ].filter(Boolean);
 
   return (
     <article className="project-card h-100">
@@ -9,7 +16,7 @@ function ProjectCard({ project }) {
         {project.video ? (
           <video src={project.video} poster={project.image || undefined} controls muted playsInline preload="metadata" />
         ) : (
-          project.image && <img src={project.image} alt="" loading="lazy" />
+          project.image && <img src={project.image} alt={project.visualLabel || ""} loading="lazy" />
         )}
         <span>{project.visualLabel}</span>
       </div>
@@ -22,7 +29,7 @@ function ProjectCard({ project }) {
 
         <p className="project-type">{project.type}</p>
         <h3>{project.title}</h3>
-        <p className="project-context">{project.context}</p>
+        <p className="project-context">{project.summary}</p>
 
         <div className="case-grid">
           <div>
@@ -45,26 +52,18 @@ function ProjectCard({ project }) {
           </div>
         </div>
 
-        <details className="project-details">
-          <summary>View responsibilities</summary>
-          <ul>
-            {responsibilities.map((item) => (
-              <li key={item}>{item}</li>
-            ))}
-          </ul>
-        </details>
-
-        <div className="d-flex flex-wrap gap-2 mt-4">
-          {links.map((link) =>
-            link.url ? (
-              <a key={link.label} href={link.url} className="btn btn-dark btn-sm rounded-pill" target="_blank" rel="noreferrer">
+        <div className="project-card-actions">
+          <Link to={`/portfolio/${slug}`} className="btn btn-dark btn-sm rounded-pill">
+            View Case Study
+          </Link>
+          {evidenceLinks.length > 0 ? (
+            evidenceLinks.map((link) => (
+              <a key={link.label} href={link.url} className="btn btn-outline-dark btn-sm rounded-pill" target="_blank" rel="noreferrer">
                 {link.label}
               </a>
-            ) : (
-              <button key={link.label} className="btn btn-outline-secondary btn-sm rounded-pill" disabled>
-                {link.label}
-              </button>
-            )
+            ))
+          ) : (
+            <span className="evidence-note">External evidence links not available yet.</span>
           )}
         </div>
       </div>

@@ -50,7 +50,8 @@ namespace backend_dotnet.Controllers
 
                 var projects = await _context.PortfolioProjects
                     .AsNoTracking()
-                    .OrderBy(item => item.SortOrder)
+                    .OrderBy(item => item.DisplayOrder)
+                    .ThenBy(item => item.SortOrder)
                     .ThenBy(item => item.Id)
                     .ToListAsync(cancellationToken);
 
@@ -91,7 +92,8 @@ namespace backend_dotnet.Controllers
             {
                 var projects = await _context.PortfolioProjects
                     .AsNoTracking()
-                    .OrderBy(item => item.SortOrder)
+                    .OrderBy(item => item.DisplayOrder)
+                    .ThenBy(item => item.SortOrder)
                     .ThenBy(item => item.Id)
                     .ToListAsync(cancellationToken);
 
@@ -119,7 +121,7 @@ namespace backend_dotnet.Controllers
                 var project = await _context.PortfolioProjects
                     .AsNoTracking()
                     .FirstOrDefaultAsync(
-                        item => item.ProjectId == projectId,
+                        item => item.Slug == projectId || item.ProjectId == projectId,
                         cancellationToken);
 
                 if (project is null)
@@ -168,26 +170,34 @@ namespace backend_dotnet.Controllers
         {
             return new ProjectDto(
                 project.ProjectId,
+                project.Slug,
                 project.Title,
+                project.Summary,
                 project.Category,
                 project.Year,
                 project.Type,
                 project.VisualLabel,
                 project.ImageUrl,
                 project.VideoUrl,
+                ReadGallery(project.GalleryJson),
                 project.Context,
                 project.Problem,
                 project.Solution,
                 project.Role,
                 ReadStringList(project.ResponsibilitiesJson),
                 ReadStringList(project.ToolsJson),
+                ReadStringList(project.ResultsJson),
+                ReadStringList(project.LessonsLearnedJson),
+                project.GithubUrl,
+                project.LiveDemoUrl,
                 ReadLinks(project.LinksJson),
-                project.Featured);
+                project.Featured,
+                project.DisplayOrder);
         }
 
         private static SkillGroupDto ToDto(SkillGroup item)
         {
-            return new SkillGroupDto(item.Title, item.Score, item.Tools);
+            return new SkillGroupDto(item.Title, item.Level, item.Usage, item.Tools);
         }
 
         private static TimelineItemDto ToDto(TimelineItem item)
@@ -213,6 +223,16 @@ namespace backend_dotnet.Controllers
             }
 
             return JsonSerializer.Deserialize<IReadOnlyList<ProjectLinkDto>>(value, JsonOptions) ?? [];
+        }
+
+        private static IReadOnlyList<ProjectGalleryItemDto> ReadGallery(string value)
+        {
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                return [];
+            }
+
+            return JsonSerializer.Deserialize<IReadOnlyList<ProjectGalleryItemDto>>(value, JsonOptions) ?? [];
         }
     }
 }

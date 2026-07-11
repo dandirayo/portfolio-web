@@ -15,6 +15,14 @@ namespace backend_dotnet.Models
         public int Score { get; set; }
 
         [Required]
+        [StringLength(120)]
+        public string Level { get; set; } = string.Empty;
+
+        [Required]
+        [StringLength(500)]
+        public string Usage { get; set; } = string.Empty;
+
+        [Required]
         [StringLength(300)]
         public string Tools { get; set; } = string.Empty;
     }

@@ -4,7 +4,7 @@ import ProjectCard from "../components/ProjectCard";
 import { usePortfolioData } from "../hooks/usePortfolioData";
 
 function Home() {
-  const { data } = usePortfolioData();
+  const { data, source } = usePortfolioData();
   const { expertise, profile, projects } = data;
   const featuredProjects = projects.filter((project) => project.featured).slice(0, 3);
 
@@ -88,12 +88,16 @@ function Home() {
               align="left"
               eyebrow="Featured Work"
               title="Selected case studies"
-              description="The first three projects should become your strongest visual case studies."
+              description="A quick look at case studies with role, problem, solution, results, and next evidence states."
             />
             <Link to="/portfolio" className="btn btn-outline-dark rounded-pill px-4 align-self-start align-self-lg-end">
               See All Projects
             </Link>
           </div>
+
+          {source === "local" && (
+            <p className="data-state">Showing local portfolio content while the API or database is unavailable.</p>
+          )}
 
           <div className="row g-4">
             {featuredProjects.map((project) => (

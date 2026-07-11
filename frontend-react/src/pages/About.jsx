@@ -42,22 +42,20 @@ function About() {
       <section className="section-padding pt-0">
         <div className="container">
           <SectionTitle
-            eyebrow="Skill Matrix"
+            eyebrow="Skill Snapshot"
             title="Balanced between design, operations, code, and data."
-            description="A practical snapshot of the areas I use across product design, support operations, development, and data work."
+            description="A practical, evidence-based view of how each skill area is used instead of subjective percentage scores."
           />
           <div className="row g-4 mt-2">
             {skillGroups.map((skill) => (
               <div className="col-md-6" key={skill.title}>
                 <div className="skill-card">
-                  <div className="d-flex justify-content-between gap-3">
+                  <div className="d-flex flex-wrap justify-content-between gap-3">
                     <h3>{skill.title}</h3>
-                    <strong>{skill.score}%</strong>
+                    <strong className="skill-level">{skill.level}</strong>
                   </div>
+                  <p>{skill.usage}</p>
                   <p>{skill.tools}</p>
-                  <div className="progress" role="progressbar" aria-label={skill.title} aria-valuenow={skill.score} aria-valuemin="0" aria-valuemax="100">
-                    <div className="progress-bar" style={{ width: `${skill.score}%` }}></div>
-                  </div>
                 </div>
               </div>
             ))}
