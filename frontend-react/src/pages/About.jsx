@@ -12,7 +12,14 @@ function About() {
           <div className="row align-items-center gy-5">
             <div className="col-lg-5">
               <div className="portrait-card">
-                <img className="portrait-image" src={profile.image} alt="Abstract profile visual for Dandi Prayogatama" />
+                <img
+                  className="portrait-image"
+                  src={profile.image}
+                  alt="Temporary profile visual for Dandi Prayogatama"
+                  loading="lazy"
+                  width="640"
+                  height="720"
+                />
                 <p className="mb-0">
                   A portfolio shaped around reliable systems, clear interfaces, and practical creative execution.
                 </p>

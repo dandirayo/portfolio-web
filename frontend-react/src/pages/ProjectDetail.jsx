@@ -1,5 +1,6 @@
 import { Link, useParams } from "react-router-dom";
 import SectionTitle from "../components/SectionTitle";
+import DataStateBanner from "../components/DataStateBanner";
 import { usePortfolioData } from "../hooks/usePortfolioData";
 
 function DetailList({ title, items }) {
@@ -28,7 +29,7 @@ function ProjectDetail() {
       <main className="page-shell">
         <section className="section-padding">
           <div className="container">
-            <p className="data-state">Loading case study...</p>
+            <DataStateBanner>Loading case study...</DataStateBanner>
           </div>
         </section>
       </main>
@@ -80,7 +81,7 @@ function ProjectDetail() {
           </Link>
 
           {source === "local" && (
-            <p className="data-state">Showing local fallback content because the API or database is not available.</p>
+            <DataStateBanner type="warning">Showing local fallback content because the API or database is not available.</DataStateBanner>
           )}
 
           <div className="row align-items-end gy-4">
@@ -108,7 +109,7 @@ function ProjectDetail() {
                 {item.type === "video" ? (
                   <video src={item.url} poster={project.image || undefined} controls playsInline preload="metadata" />
                 ) : (
-                  <img src={item.url} alt={item.alt || project.title} loading="lazy" />
+                  <img src={item.url} alt={item.alt || project.title} loading="lazy" width="960" height="600" />
                 )}
                 <figcaption>{item.caption}</figcaption>
               </figure>
@@ -155,7 +156,7 @@ function ProjectDetail() {
                 </div>
               ) : (
                 <p>
-                  External links are not available yet. Add GitHub, live demo, Figma, approved video, or PDF case study URLs when the assets are ready.
+                  External evidence is not available yet. GitHub, live demo, Figma, approved video, or PDF links can be added when the assets are ready.
                 </p>
               )}
             </section>

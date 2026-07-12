@@ -1,8 +1,12 @@
 import ContactForm from "../components/ContactForm";
 import SectionTitle from "../components/SectionTitle";
-import { profile } from "../data/portfolioData";
+import DataStateBanner from "../components/DataStateBanner";
+import { usePortfolioData } from "../hooks/usePortfolioData";
 
 function Contact() {
+  const { data, isLoading, source } = usePortfolioData();
+  const { profile } = data;
+
   return (
     <main className="page-shell">
       <section className="section-padding">
@@ -15,6 +19,10 @@ function Contact() {
                 title="Let's build or optimize something great together."
                 description="Available for UI/UX design, technical support consulting, systems integration projects, and multimedia collaboration."
               />
+              {isLoading && <DataStateBanner>Loading contact details...</DataStateBanner>}
+              {!isLoading && source === "local" && (
+                <DataStateBanner type="warning">Showing local contact details while the API or database is unavailable.</DataStateBanner>
+              )}
               <div className="contact-list mt-4">
                 <a href={`mailto:${profile.email}`}>{profile.email}</a>
                 <a href={`tel:${profile.phone}`}>{profile.phone}</a>
@@ -24,7 +32,7 @@ function Contact() {
               </div>
             </div>
             <div className="col-lg-7">
-              <ContactForm />
+              <ContactForm fallbackEmail={profile.email} />
             </div>
           </div>
         </div>

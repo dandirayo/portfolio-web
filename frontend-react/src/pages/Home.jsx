@@ -1,10 +1,11 @@
 import { Link } from "react-router-dom";
 import SectionTitle from "../components/SectionTitle";
 import ProjectCard from "../components/ProjectCard";
+import DataStateBanner from "../components/DataStateBanner";
 import { usePortfolioData } from "../hooks/usePortfolioData";
 
 function Home() {
-  const { data, source } = usePortfolioData();
+  const { data, isLoading, source } = usePortfolioData();
   const { expertise, profile, projects } = data;
   const featuredProjects = projects.filter((project) => project.featured).slice(0, 3);
 
@@ -14,38 +15,46 @@ function Home() {
         <div className="container">
           <div className="row align-items-center gy-5">
             <div className="col-lg-7">
-              <span className="eyebrow">Portfolio / Technical Support / UI UX</span>
-              <h1>{profile.headline}</h1>
+              <span className="eyebrow">Portfolio / Technical Support L2 / UI UX</span>
+              <p className="hero-name">{profile.name}</p>
+              <h1>{profile.title}</h1>
+              <p className="hero-value">{profile.headline}</p>
               <p className="hero-copy">{profile.subheadline}</p>
               <div className="d-flex flex-wrap gap-3 mt-4">
                 <Link to="/portfolio" className="btn btn-dark btn-lg rounded-pill px-4">
-                  Explore My Work
+                  View My Work
                 </Link>
-                <a href={profile.cvUrl} target="_blank" rel="noreferrer" className="btn btn-outline-dark btn-lg rounded-pill px-4">
-                  View Interactive CV
+                <a href={profile.cvUrl} download className="btn btn-outline-dark btn-lg rounded-pill px-4">
+                  Download CV
                 </a>
               </div>
             </div>
             <div className="col-lg-5">
               <div className="hero-card">
-                <div className="profile-orb">DP</div>
-                <p className="mb-1 text-uppercase small text-muted">Currently</p>
-                <h2>Technical Support L2</h2>
+                <img
+                  className="hero-portrait"
+                  src={profile.image}
+                  alt="Temporary profile visual for Dandi Prayogatama"
+                  width="640"
+                  height="720"
+                />
+                <p className="mb-1 text-uppercase small text-muted">Current Focus</p>
+                <h2>Reliable systems, clearer interfaces.</h2>
                 <p>
-                  Solving escalated system issues while bringing a UI/UX mindset to technical workflows and product experiences.
+                  Solving escalated support issues while turning design, data, and multimedia work into readable case studies.
                 </p>
                 <div className="hero-stats">
                   <div>
-                    <strong>7+</strong>
-                    <span>Portfolio cases</span>
+                    <strong>{projects.length}</strong>
+                    <span>Case studies</span>
                   </div>
                   <div>
-                    <strong>4</strong>
-                    <span>Core domains</span>
+                    <strong>L2</strong>
+                    <span>Support role</span>
                   </div>
                   <div>
-                    <strong>2025</strong>
-                    <span>L2 operations</span>
+                    <strong>UX</strong>
+                    <span>Design lens</span>
                   </div>
                 </div>
               </div>
@@ -95,17 +104,25 @@ function Home() {
             </Link>
           </div>
 
-          {source === "local" && (
-            <p className="data-state">Showing local portfolio content while the API or database is unavailable.</p>
+          {isLoading && <DataStateBanner>Loading featured case studies...</DataStateBanner>}
+          {!isLoading && source === "local" && (
+            <DataStateBanner type="warning">Showing local portfolio content while the API or database is unavailable.</DataStateBanner>
           )}
 
-          <div className="row g-4">
-            {featuredProjects.map((project) => (
-              <div className="col-lg-4" key={project.id}>
-                <ProjectCard project={project} />
-              </div>
-            ))}
-          </div>
+          {featuredProjects.length > 0 ? (
+            <div className="row g-4">
+              {featuredProjects.map((project) => (
+                <div className="col-lg-4" key={project.id}>
+                  <ProjectCard project={project} />
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="empty-state">
+              <h3>No featured case studies yet.</h3>
+              <p>Add or feature a project from the database to populate this section.</p>
+            </div>
+          )}
         </div>
       </section>
     </main>

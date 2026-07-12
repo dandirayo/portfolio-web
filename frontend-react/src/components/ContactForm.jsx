@@ -10,7 +10,7 @@ const initialForm = {
   message: "",
 };
 
-function ContactForm() {
+function ContactForm({ fallbackEmail = profile.email }) {
   const [formData, setFormData] = useState(initialForm);
   const [status, setStatus] = useState({ type: "idle", message: "" });
 
@@ -35,7 +35,7 @@ function ContactForm() {
     }
 
     try {
-      const response = await axios.post(apiEndpoints.contact, payload);
+      const response = await axios.post(apiEndpoints.contact, payload, { timeout: 8000 });
       const delivery = response.data?.delivery;
       setStatus({
         type: "success",
@@ -56,7 +56,7 @@ function ContactForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="contact-form">
+    <form onSubmit={handleSubmit} className="contact-form" aria-busy={status.type === "loading"}>
       <div className="row g-3">
         <div className="col-12">
           <label className="form-label">Topic</label>
@@ -113,11 +113,15 @@ function ContactForm() {
       </div>
 
       {status.type !== "idle" && (
-        <div className={`alert mt-3 ${status.type === "success" ? "alert-success" : status.type === "error" ? "alert-warning" : "alert-info"}`}>
+        <div
+          className={`alert mt-3 ${status.type === "success" ? "alert-success" : status.type === "error" ? "alert-warning" : "alert-info"}`}
+          role="status"
+          aria-live="polite"
+        >
           {status.message}
           {status.type === "error" && (
             <div className="mt-2">
-              <a href={`mailto:${profile.email}`}>Email {profile.email}</a>
+              <a href={`mailto:${fallbackEmail}`}>Email {fallbackEmail}</a>
             </div>
           )}
         </div>

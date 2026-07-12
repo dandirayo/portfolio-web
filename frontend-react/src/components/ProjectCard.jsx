@@ -16,7 +16,7 @@ function ProjectCard({ project }) {
         {project.video ? (
           <video src={project.video} poster={project.image || undefined} controls muted playsInline preload="metadata" />
         ) : (
-          project.image && <img src={project.image} alt={project.visualLabel || ""} loading="lazy" />
+          project.image && <img src={project.image} alt={project.visualLabel || ""} loading="lazy" width="960" height="600" />
         )}
         <span>{project.visualLabel}</span>
       </div>
@@ -63,7 +63,7 @@ function ProjectCard({ project }) {
               </a>
             ))
           ) : (
-            <span className="evidence-note">External evidence links not available yet.</span>
+            <span className="evidence-note">Evidence links pending.</span>
           )}
         </div>
       </div>

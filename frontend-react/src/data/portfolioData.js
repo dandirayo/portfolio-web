@@ -70,7 +70,7 @@ export const projects = [
       galleryItem(
         placeholderImages.uiux,
         "Neutral UI UX placeholder for Peduli Donasi",
-        "Replace with real app screens or Figma export."
+        "Temporary visual placeholder while final project screens are being prepared."
       ),
     ],
     context:
@@ -118,7 +118,7 @@ export const projects = [
       galleryItem(
         placeholderImages.uiux,
         "Neutral UI UX placeholder for Android paraphrasing app",
-        "Replace with wireframe and prototype screenshots."
+        "Temporary visual placeholder while wireframe and prototype screenshots are being prepared."
       ),
     ],
     context:
@@ -166,7 +166,7 @@ export const projects = [
       galleryItem(
         placeholderImages.creative,
         "Neutral creative project placeholder for game prototype",
-        "Replace with gameplay clip, UI screens, or safe prototype screenshots."
+        "Temporary visual placeholder while approved gameplay or prototype visuals are being prepared."
       ),
     ],
     context:
@@ -214,7 +214,7 @@ export const projects = [
       galleryItem(
         placeholderImages.itData,
         "Neutral IT data placeholder for L2 support operations",
-        "Replace with a non-sensitive workflow diagram only."
+        "Temporary visual placeholder for a future non-sensitive workflow diagram."
       ),
     ],
     context:
@@ -262,7 +262,7 @@ export const projects = [
       galleryItem(
         placeholderImages.itData,
         "Neutral IT data placeholder for analytics project",
-        "Replace with dashboard screenshot or notebook preview."
+        "Temporary visual placeholder while dashboard or notebook previews are being prepared."
       ),
     ],
     context:
@@ -310,7 +310,7 @@ export const projects = [
       galleryItem(
         placeholderImages.creative,
         "Neutral creative placeholder for print production design",
-        "Replace with approved print samples only."
+        "Temporary visual placeholder while approved print samples are being prepared."
       ),
     ],
     context:
@@ -357,7 +357,7 @@ export const projects = [
       galleryItem(
         placeholderImages.creative,
         "Neutral creative placeholder for social media video production",
-        "Replace with approved clips or showreel thumbnail."
+        "Temporary visual placeholder while approved clips or a showreel thumbnail are being prepared."
       ),
     ],
     context:

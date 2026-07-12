@@ -1,6 +1,7 @@
 import { useState } from "react";
 import ProjectCard from "../components/ProjectCard";
 import SectionTitle from "../components/SectionTitle";
+import DataStateBanner from "../components/DataStateBanner";
 import { usePortfolioData } from "../hooks/usePortfolioData";
 
 const filters = ["All", "UI/UX Design", "IT & Data", "Video & Game"];
@@ -25,12 +26,12 @@ function Portfolio() {
             description="Each project now has a case-study structure with honest evidence states, role clarity, results, and lessons learned."
           />
 
-          {isLoading && <p className="data-state">Loading portfolio data...</p>}
+          {isLoading && <DataStateBanner>Loading portfolio data...</DataStateBanner>}
           {!isLoading && source === "local" && (
-            <p className="data-state">Using local fallback content because the API or database is not available.</p>
+            <DataStateBanner type="warning">Using local fallback content because the API or database is not available.</DataStateBanner>
           )}
 
-          <div className="filter-bar justify-content-center mb-5" aria-label="Filter projects by category">
+          <div className="filter-bar justify-content-center mb-5" role="group" aria-label="Filter projects by category">
             {filters.map((filter) => (
               <button
                 key={filter}
