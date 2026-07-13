@@ -8,6 +8,7 @@ const initialForm = {
   name: "",
   email: "",
   message: "",
+  website: "",
 };
 
 function ContactForm({ fallbackEmail = profile.email }) {
@@ -27,6 +28,7 @@ function ContactForm({ fallbackEmail = profile.email }) {
       name: formData.name.trim(),
       email: formData.email.trim(),
       message: formData.message.trim(),
+      website: formData.website.trim(),
     };
 
     if (!payload.name || !payload.email || !payload.message) {
@@ -58,6 +60,19 @@ function ContactForm({ fallbackEmail = profile.email }) {
   return (
     <form onSubmit={handleSubmit} className="contact-form" aria-busy={status.type === "loading"}>
       <div className="row g-3">
+        <div className="honeypot-field" aria-hidden="true">
+          <label htmlFor="contact-website">Website</label>
+          <input
+            id="contact-website"
+            type="text"
+            name="website"
+            value={formData.website}
+            onChange={handleChange}
+            tabIndex="-1"
+            autoComplete="off"
+          />
+        </div>
+
         <div className="col-12">
           <label className="form-label">Topic</label>
           <select

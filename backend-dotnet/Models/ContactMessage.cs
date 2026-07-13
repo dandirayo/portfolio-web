@@ -19,5 +19,8 @@ namespace backend_dotnet.Models
         [Required]
         [StringLength(2000)]
         public string Message { get; set; } = string.Empty;
+
+        [StringLength(120)]
+        public string Website { get; set; } = string.Empty;
     }
 }

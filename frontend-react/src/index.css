@@ -673,6 +673,14 @@ summary:focus-visible {
   padding-top: 1rem;
 }
 
+.honeypot-field {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
 .contact-list {
   display: grid;
   gap: 0.85rem;

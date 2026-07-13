@@ -92,6 +92,19 @@ Swagger is available in development mode at:
 http://localhost:5050/swagger
 ```
 
+Backend health check:
+
+```txt
+http://localhost:5050/health
+```
+
+If the frontend runs from a different domain or port, allow it through CORS:
+
+```powershell
+$env:FrontendCors__AllowedOrigins__0 = "http://localhost:5173"
+$env:FrontendCors__AllowedOrigins__1 = "https://your-domain.com"
+```
+
 ## Contact Form Email Delivery
 
 The contact form posts to the backend `/api/contact` endpoint. Messages are saved to the `contact_submissions` table first. The backend also forwards messages through SMTP when these environment variables are configured:
@@ -109,6 +122,19 @@ $env:ContactEmail__ToEmail = "your-email@gmail.com"
 For Gmail, use an App Password instead of your normal account password. For a custom domain email, use the SMTP settings from the email provider.
 
 If SMTP is not configured or delivery fails, the message still stays in phpMyAdmin as long as MySQL is running.
+
+The contact endpoint also includes a simple spam honeypot and fixed-window rate limit. Default limit:
+
+```txt
+5 submissions per IP every 10 minutes
+```
+
+You can tune it with:
+
+```powershell
+$env:ContactRateLimit__PermitLimit = "5"
+$env:ContactRateLimit__WindowMinutes = "10"
+```
 
 ## Portfolio Data
 
@@ -204,5 +230,5 @@ dotnet build
 ## Notes
 
 - Build artifacts such as `bin/`, `obj/`, `dist/`, and `node_modules/` are ignored by git.
-- The contact form saves messages to MySQL and optionally forwards them through SMTP.
+- The contact form saves messages to MySQL, rate-limits repeat submissions, and optionally forwards them through SMTP.
 - Portfolio project cards use backend data first, then local fallback data if the API is offline.

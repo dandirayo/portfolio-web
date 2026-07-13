@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.EntityFrameworkCore;
 using backend_dotnet.Data;
 using backend_dotnet.Models;
@@ -10,6 +11,13 @@ namespace backend_dotnet.Controllers
     [Route("api/[controller]")]
     public class ContactController : ControllerBase
     {
+        private static readonly HashSet<string> AllowedTopics = new(StringComparer.OrdinalIgnoreCase)
+        {
+            "Collaboration Request",
+            "Project Inquiry",
+            "General Question",
+        };
+
         private readonly ILogger<ContactController> _logger;
         private readonly IContactEmailSender _emailSender;
         private readonly PortfolioDbContext _context;
@@ -25,8 +33,10 @@ namespace backend_dotnet.Controllers
         }
 
         [HttpPost]
+        [EnableRateLimiting("contact-form")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status429TooManyRequests)]
         [ProducesResponseType(StatusCodes.Status503ServiceUnavailable)]
         public async Task<IActionResult> Post(
             [FromBody] ContactMessage message,
@@ -38,6 +48,7 @@ namespace backend_dotnet.Controllers
             message.Name = message.Name.Trim();
             message.Email = message.Email.Trim();
             message.Message = message.Message.Trim();
+            message.Website = message.Website.Trim();
 
             if (string.IsNullOrWhiteSpace(message.Name) ||
                 string.IsNullOrWhiteSpace(message.Email) ||
@@ -46,10 +57,26 @@ namespace backend_dotnet.Controllers
                 return ValidationProblem("Name, email, and message are required.");
             }
 
+            if (!AllowedTopics.Contains(message.Topic))
+            {
+                message.Topic = "General Question";
+            }
+
+            if (!string.IsNullOrWhiteSpace(message.Website))
+            {
+                _logger.LogWarning("Contact honeypot field was filled. Submission skipped.");
+
+                return Ok(new
+                {
+                    status = "received",
+                    stored = false,
+                    delivery = "skipped",
+                });
+            }
+
             _logger.LogInformation(
-                "Contact message received from {Name} <{Email}> with {MessageLength} characters.",
-                message.Name,
-                message.Email,
+                "Contact message received with topic {Topic} and {MessageLength} characters.",
+                message.Topic,
                 message.Message.Length);
 
             var submission = new ContactSubmission
@@ -59,8 +86,8 @@ namespace backend_dotnet.Controllers
                 Email = message.Email,
                 Message = message.Message,
                 CreatedAtUtc = DateTime.UtcNow,
-                SourceIp = HttpContext.Connection.RemoteIpAddress?.ToString() ?? string.Empty,
-                UserAgent = Request.Headers.UserAgent.ToString(),
+                SourceIp = Truncate(HttpContext.Connection.RemoteIpAddress?.ToString() ?? string.Empty, 80),
+                UserAgent = Truncate(Request.Headers.UserAgent.ToString(), 500),
                 EmailDeliveryStatus = "pending",
             };
 
@@ -73,12 +100,13 @@ namespace backend_dotnet.Controllers
             {
                 _logger.LogError(
                     exception,
-                    "Failed to store contact message from {Email}.",
-                    message.Email);
+                    "Failed to store contact message.");
 
                 return StatusCode(
                     StatusCodes.Status503ServiceUnavailable,
-                    new { status = "database_unavailable" });
+                    new ApiErrorResponse(
+                        "database_unavailable",
+                        "Contact message could not be saved right now."));
             }
 
             var deliveryStatus = "email_failed";
@@ -92,8 +120,8 @@ namespace backend_dotnet.Controllers
             {
                 _logger.LogError(
                     exception,
-                    "Failed to deliver contact email from {Email}.",
-                    message.Email);
+                    "Failed to deliver contact email for contact submission {ContactId}.",
+                    submission.Id);
             }
 
             try
@@ -116,6 +144,11 @@ namespace backend_dotnet.Controllers
                 delivery = deliveryStatus,
                 contactId = submission.Id,
             });
+        }
+
+        private static string Truncate(string value, int maxLength)
+        {
+            return value.Length <= maxLength ? value : value[..maxLength];
         }
     }
 }
