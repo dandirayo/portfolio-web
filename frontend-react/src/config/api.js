@@ -4,6 +4,8 @@ export const apiBaseUrl = (
   import.meta.env.VITE_API_BASE_URL || fallbackApiBaseUrl
 ).replace(/\/$/, "");
 
+export const isDemoMode = import.meta.env.VITE_DEMO_MODE === "true";
+
 export const apiEndpoints = {
   admin: {
     contacts: `${apiBaseUrl}/api/admin/contacts`,

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { apiEndpoints } from "../config/api";
+import { apiEndpoints, isDemoMode } from "../config/api";
 import { portfolioData } from "../data/portfolioData";
 
 const normalizeProject = (project) => {
@@ -55,6 +55,19 @@ export function usePortfolioData() {
 
   useEffect(() => {
     let isMounted = true;
+
+    if (isDemoMode) {
+      setState({
+        data: normalizePortfolioData(portfolioData),
+        isLoading: false,
+        error: "",
+        source: "local",
+      });
+
+      return () => {
+        isMounted = false;
+      };
+    }
 
     axios
       .get(apiEndpoints.portfolio, { timeout: 4000 })

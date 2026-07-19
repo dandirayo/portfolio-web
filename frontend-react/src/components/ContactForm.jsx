@@ -1,6 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
-import { apiEndpoints } from "../config/api";
+import { apiEndpoints, isDemoMode } from "../config/api";
 import { profile } from "../data/portfolioData";
 
 const initialForm = {
@@ -33,6 +33,15 @@ function ContactForm({ fallbackEmail = profile.email }) {
 
     if (!payload.name || !payload.email || !payload.message) {
       setStatus({ type: "error", message: "Please fill in all fields before sending." });
+      return;
+    }
+
+    if (isDemoMode) {
+      setStatus({
+        type: "error",
+        message:
+          "This online demo is running without the backend yet. Please contact me directly by email.",
+      });
       return;
     }
 
