@@ -3,7 +3,27 @@ import axios from "axios";
 import SectionTitle from "../components/SectionTitle";
 import { apiEndpoints } from "../config/api";
 
-const adminKeyStorage = "portfolio-admin-key";
+const adminAuthStorage = "portfolio-admin-auth";
+const emptyAdminAuth = { username: "", password: "" };
+
+const readStoredAdminAuth = () => {
+  try {
+    return JSON.parse(sessionStorage.getItem(adminAuthStorage)) ?? emptyAdminAuth;
+  } catch {
+    return emptyAdminAuth;
+  }
+};
+
+const hasAdminAuth = (auth) => Boolean(auth.username && auth.password);
+
+const makeAdminRequestConfig = (auth) => ({
+  headers: hasAdminAuth(auth)
+    ? {
+        "X-Admin-Username": auth.username,
+        "X-Admin-Password": auth.password,
+      }
+    : {},
+});
 
 const tabs = [
   { id: "profile", label: "Profile" },
@@ -155,6 +175,7 @@ const buildProjectPayload = (draft) => ({
 });
 
 function AdminField({
+  autoComplete,
   label,
   name,
   value,
@@ -180,6 +201,7 @@ function AdminField({
           name={name}
           value={value ?? ""}
           onChange={onChange}
+          autoComplete={autoComplete}
           required={required}
         />
       )}
@@ -598,49 +620,99 @@ function MessageInbox({ messages, requestConfig, onDeleted, setStatus }) {
 
 function Admin() {
   const [activeTab, setActiveTab] = useState("profile");
-  const [adminKey, setAdminKey] = useState(() => localStorage.getItem(adminKeyStorage) || "");
+  const [auth, setAuth] = useState(readStoredAdminAuth);
+  const [loginDraft, setLoginDraft] = useState(emptyAdminAuth);
   const [dashboard, setDashboard] = useState(emptyDashboard);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(() => hasAdminAuth(readStoredAdminAuth()));
   const [status, setStatus] = useState({ type: "idle", message: "" });
+  const isAuthenticated = hasAdminAuth(auth);
 
   const requestConfig = useMemo(
-    () => ({
-      headers: adminKey ? { "X-Admin-Key": adminKey } : {},
-    }),
-    [adminKey]
+    () => makeAdminRequestConfig(auth),
+    [auth]
   );
 
-  const loadDashboard = useCallback(async () => {
+  const loadDashboard = useCallback(async (nextAuth = auth) => {
+    if (!hasAdminAuth(nextAuth)) {
+      setIsLoading(false);
+      return;
+    }
+
     try {
       setIsLoading(true);
-      const response = await axios.get(apiEndpoints.admin.snapshot, requestConfig);
+      const response = await axios.get(apiEndpoints.admin.snapshot, makeAdminRequestConfig(nextAuth));
       setDashboard(response.data);
       setStatus({ type: "success", message: "Admin data loaded." });
     } catch (error) {
+      if (error.response?.status === 401) {
+        sessionStorage.removeItem(adminAuthStorage);
+        setAuth(emptyAdminAuth);
+        setDashboard(emptyDashboard);
+      }
+
       setStatus({
         type: "error",
         message:
           error.response?.data?.message ||
-          "Admin API is unavailable. Start the backend and MySQL, then reload.",
+          "Admin login failed. Check the username, password, backend, and MySQL.",
       });
     } finally {
       setIsLoading(false);
     }
-  }, [requestConfig]);
+  }, [auth]);
 
   useEffect(() => {
-    loadDashboard();
-  }, [loadDashboard]);
-
-  const handleKeyChange = (event) => {
-    const value = event.target.value;
-    setAdminKey(value);
-
-    if (value) {
-      localStorage.setItem(adminKeyStorage, value);
-    } else {
-      localStorage.removeItem(adminKeyStorage);
+    if (isAuthenticated) {
+      loadDashboard();
+      return;
     }
+
+    setIsLoading(false);
+  }, [isAuthenticated, loadDashboard]);
+
+  const updateLoginDraft = (event) => {
+    setLoginDraft((current) => ({
+      ...current,
+      [event.target.name]: event.target.value,
+    }));
+  };
+
+  const handleLogin = async (event) => {
+    event.preventDefault();
+
+    const nextAuth = {
+      username: loginDraft.username.trim(),
+      password: loginDraft.password,
+    };
+
+    if (!hasAdminAuth(nextAuth)) {
+      setStatus({ type: "error", message: "Username and password are required." });
+      return;
+    }
+
+    try {
+      setIsLoading(true);
+      const response = await axios.get(apiEndpoints.admin.snapshot, makeAdminRequestConfig(nextAuth));
+      sessionStorage.setItem(adminAuthStorage, JSON.stringify(nextAuth));
+      setAuth(nextAuth);
+      setDashboard(response.data);
+      setStatus({ type: "success", message: "Admin login successful." });
+    } catch (error) {
+      setStatus({
+        type: "error",
+        message: error.response?.data?.message || "Admin login failed.",
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleLogout = () => {
+    sessionStorage.removeItem(adminAuthStorage);
+    setAuth(emptyAdminAuth);
+    setLoginDraft(emptyAdminAuth);
+    setDashboard(emptyDashboard);
+    setStatus({ type: "idle", message: "" });
   };
 
   const replaceCollectionItem = (collection, item) => {
@@ -702,6 +774,56 @@ function Admin() {
     description: "Describe this experience.",
   });
 
+  if (!isAuthenticated) {
+    return (
+      <main className="page-shell admin-shell">
+        <section className="section-padding">
+          <div className="container admin-login-container">
+            <SectionTitle
+              align="left"
+              eyebrow="Local CMS"
+              title="Portfolio Admin"
+              description="Sign in to edit portfolio content from the local database."
+            />
+
+            {status.message && (
+              <div className={`admin-status ${status.type}`} role="status" aria-live="polite">
+                {status.message}
+              </div>
+            )}
+
+            <form className="admin-login-card" onSubmit={handleLogin}>
+              <div className="admin-form-grid">
+                <AdminField
+                  label="Username"
+                  name="username"
+                  value={loginDraft.username}
+                  onChange={updateLoginDraft}
+                  autoComplete="username"
+                  required
+                />
+                <AdminField
+                  label="Password"
+                  name="password"
+                  type="password"
+                  value={loginDraft.password}
+                  onChange={updateLoginDraft}
+                  autoComplete="current-password"
+                  required
+                />
+              </div>
+              <div className="admin-actions">
+                <button type="submit" className="btn btn-dark rounded-pill px-4" disabled={isLoading}>
+                  {isLoading ? "Signing in..." : "Login"}
+                </button>
+              </div>
+            </form>
+          </div>
+        </section>
+      </main>
+    );
+  }
+
   return (
     <main className="page-shell admin-shell">
       <section className="section-padding">
@@ -713,18 +835,15 @@ function Admin() {
               title="Portfolio Admin"
               description="Edit database content locally before preparing the website for online deployment."
             />
-            <div className="admin-key-box">
-              <label>
-                <span>Admin API Key</span>
-                <input
-                  type="password"
-                  value={adminKey}
-                  onChange={handleKeyChange}
-                  placeholder="Optional for localhost"
-                />
-              </label>
-              <button type="button" className="btn btn-outline-dark rounded-pill px-3" onClick={loadDashboard}>
+            <div className="admin-session-box">
+              <span>
+                Signed in as <strong>{auth.username}</strong>
+              </span>
+              <button type="button" className="btn btn-outline-dark rounded-pill px-3" onClick={() => loadDashboard()}>
                 Reload
+              </button>
+              <button type="button" className="btn btn-outline-danger rounded-pill px-3" onClick={handleLogout}>
+                Logout
               </button>
             </div>
           </div>

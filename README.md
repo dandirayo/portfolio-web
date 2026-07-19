@@ -155,9 +155,18 @@ Timeline
 Contact messages
 ```
 
-For local work, admin endpoints are allowed from localhost without an API key. Before putting the backend online, set an admin key and keep it outside source control:
+For temporary local work, sign in with:
+
+```txt
+username: admin
+password: admin
+```
+
+Before putting the backend online, change the admin password or set an admin key and keep secrets outside source control:
 
 ```powershell
+$env:Admin__Username = "admin"
+$env:Admin__Password = "change-this-password"
 $env:Admin__ApiKey = "change-this-to-a-long-secret"
 $env:Admin__AllowLocalWithoutApiKey = "false"
 ```

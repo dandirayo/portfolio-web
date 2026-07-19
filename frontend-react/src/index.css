@@ -708,7 +708,8 @@ summary:focus-visible {
   margin-bottom: 1.5rem;
 }
 
-.admin-key-box {
+.admin-key-box,
+.admin-session-box {
   display: flex;
   gap: 0.75rem;
   align-items: end;
@@ -724,6 +725,7 @@ summary:focus-visible {
 }
 
 .admin-key-box span,
+.admin-session-box span,
 .admin-field span {
   font-size: 0.82rem;
   color: #475569;
@@ -739,6 +741,19 @@ summary:focus-visible {
   color: #111827;
   padding: 0.8rem 0.9rem;
   font: inherit;
+}
+
+.admin-login-container {
+  max-width: 760px;
+}
+
+.admin-login-card {
+  display: grid;
+  gap: 1rem;
+  border: 1px solid rgba(15, 23, 42, 0.1);
+  border-radius: var(--radius-card);
+  background: #fff;
+  padding: 1.2rem;
 }
 
 .admin-field textarea {
@@ -1040,11 +1055,13 @@ summary:focus-visible {
   }
 
   .admin-key-box,
+  .admin-session-box,
   .admin-actions {
     justify-content: stretch;
   }
 
-  .admin-key-box {
+  .admin-key-box,
+  .admin-session-box {
     align-items: stretch;
     flex-direction: column;
   }
@@ -1054,7 +1071,8 @@ summary:focus-visible {
   }
 
   .admin-actions .btn,
-  .admin-key-box .btn {
+  .admin-key-box .btn,
+  .admin-session-box .btn {
     width: 100%;
   }
 }

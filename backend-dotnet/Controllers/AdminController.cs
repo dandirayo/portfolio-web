@@ -471,11 +471,19 @@ namespace backend_dotnet.Controllers
                             "Admin access requires a valid X-Admin-Key header."));
             }
 
+            if (Request.Headers.TryGetValue("X-Admin-Username", out var suppliedUsername) &&
+                Request.Headers.TryGetValue("X-Admin-Password", out var suppliedPassword) &&
+                string.Equals(suppliedUsername.ToString(), _options.Username, StringComparison.Ordinal) &&
+                string.Equals(suppliedPassword.ToString(), _options.Password, StringComparison.Ordinal))
+            {
+                return null;
+            }
+
             return _options.AllowLocalWithoutApiKey && IsLocalRequest()
                 ? null
                 : Unauthorized(new ApiErrorResponse(
                     "admin_unauthorized",
-                    "Admin access requires an API key outside localhost."));
+                    "Admin access requires a valid username and password."));
         }
 
         private bool IsLocalRequest()
