@@ -5,6 +5,15 @@ export const apiBaseUrl = (
 ).replace(/\/$/, "");
 
 export const apiEndpoints = {
+  admin: {
+    contacts: `${apiBaseUrl}/api/admin/contacts`,
+    expertise: `${apiBaseUrl}/api/admin/expertise`,
+    profile: `${apiBaseUrl}/api/admin/profile`,
+    projects: `${apiBaseUrl}/api/admin/projects`,
+    skills: `${apiBaseUrl}/api/admin/skills`,
+    snapshot: `${apiBaseUrl}/api/admin/snapshot`,
+    timeline: `${apiBaseUrl}/api/admin/timeline`,
+  },
   contact: `${apiBaseUrl}/api/contact`,
   portfolio: `${apiBaseUrl}/api/portfolio`,
 };

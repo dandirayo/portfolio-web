@@ -49,6 +49,11 @@ function Navbar() {
                 Contact
               </NavLink>
             </li>
+            <li className="nav-item">
+              <NavLink className={navLinkClass} to="/admin" onClick={closeMenu}>
+                Admin
+              </NavLink>
+            </li>
             <li className="nav-item ms-lg-2">
               <a
                 className="btn btn-sm btn-dark rounded-pill px-3"

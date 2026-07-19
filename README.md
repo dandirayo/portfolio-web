@@ -136,6 +136,32 @@ $env:ContactRateLimit__PermitLimit = "5"
 $env:ContactRateLimit__WindowMinutes = "10"
 ```
 
+## Local Admin CMS
+
+Open the local CMS after the backend and frontend are running:
+
+```txt
+http://localhost:5173/admin
+```
+
+The CMS edits the MySQL data through `/api/admin/*` endpoints:
+
+```txt
+Profile
+Projects / case studies
+Expertise
+Skill groups
+Timeline
+Contact messages
+```
+
+For local work, admin endpoints are allowed from localhost without an API key. Before putting the backend online, set an admin key and keep it outside source control:
+
+```powershell
+$env:Admin__ApiKey = "change-this-to-a-long-secret"
+$env:Admin__AllowLocalWithoutApiKey = "false"
+```
+
 ## Portfolio Data
 
 The frontend loads portfolio data from:
@@ -231,4 +257,5 @@ dotnet build
 
 - Build artifacts such as `bin/`, `obj/`, `dist/`, and `node_modules/` are ignored by git.
 - The contact form saves messages to MySQL, rate-limits repeat submissions, and optionally forwards them through SMTP.
+- The local admin CMS edits MySQL content first; deploy/online setup should only happen after the public menu and content are finalized.
 - Portfolio project cards use backend data first, then local fallback data if the API is offline.

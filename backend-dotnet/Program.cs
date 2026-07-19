@@ -40,6 +40,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddProblemDetails();
+builder.Services.Configure<AdminOptions>(
+    builder.Configuration.GetSection(AdminOptions.SectionName));
 builder.Services.Configure<ContactEmailOptions>(
     builder.Configuration.GetSection(ContactEmailOptions.SectionName));
 builder.Services.Configure<ContactRateLimitOptions>(
