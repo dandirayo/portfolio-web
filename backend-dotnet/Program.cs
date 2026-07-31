@@ -126,6 +126,7 @@ if (app.Environment.IsDevelopment())
 app.UseCors("FrontendPolicy");
 app.UseRateLimiter();
 app.UseAuthorization();
+app.MapGet("/health/live", () => Results.Ok(new { status = "ok" }));
 app.MapHealthChecks("/health");
 app.MapControllers();
 app.Run();

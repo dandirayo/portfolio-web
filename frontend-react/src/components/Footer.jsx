@@ -13,9 +13,9 @@ function Footer() {
           </div>
           <div className="col-lg-6 text-lg-end">
             <div className="footer-links">
-              <a href={`mailto:${profile.email}`}>{profile.email}</a>
-              <a href={profile.linkedin} target="_blank" rel="noreferrer">LinkedIn</a>
-              <a href={profile.github} target="_blank" rel="noreferrer">GitHub</a>
+              {profile.email && <a href={`mailto:${profile.email}`}>{profile.email}</a>}
+              {profile.linkedin && <a href={profile.linkedin} target="_blank" rel="noreferrer">LinkedIn</a>}
+              {profile.github && <a href={profile.github} target="_blank" rel="noreferrer">GitHub</a>}
             </div>
           </div>
         </div>

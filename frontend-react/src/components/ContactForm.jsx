@@ -38,9 +38,10 @@ function ContactForm({ fallbackEmail = profile.email }) {
 
     if (isDemoMode) {
       setStatus({
-        type: "error",
+        type: "success",
         message:
-          "This online demo is running without the backend yet. Please contact me directly by email.",
+          "This demo is running without backend delivery yet. Please use the direct email link below.",
+        showEmail: true,
       });
       return;
     }
@@ -143,7 +144,7 @@ function ContactForm({ fallbackEmail = profile.email }) {
           aria-live="polite"
         >
           {status.message}
-          {status.type === "error" && (
+          {(status.type === "error" || status.showEmail) && (
             <div className="mt-2">
               <a href={`mailto:${fallbackEmail}`}>Email {fallbackEmail}</a>
             </div>

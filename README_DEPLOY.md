@@ -21,6 +21,7 @@ Dokumen ini untuk deploy awal `portfolio-web` ke VPS Ubuntu 24.04 via Coolify da
 - Frontend dev port: `5173`.
 - Backend internal port: `5050`.
 - Health check backend: `/health`.
+- Liveness check backend tanpa database: `/health/live`.
 
 ## Mode Deploy Awal Tanpa Database
 
@@ -86,7 +87,7 @@ Saat backend sudah akan dipublish:
 - Build Command: `dotnet publish -c Release -o /app/publish`.
 - Start Command: `dotnet /app/publish/backend-dotnet.dll`.
 - Port: `5050`.
-- Health Check Path: `/health`.
+- Health Check Path: `/health/live` untuk cek proses API, atau `/health` jika database production sudah wajib sehat.
 - Database: YA, MariaDB/MySQL.
 - Persistent Volume: pada service MariaDB.
 

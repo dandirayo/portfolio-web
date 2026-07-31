@@ -3,6 +3,7 @@ import SectionTitle from "../components/SectionTitle";
 import ProjectCard from "../components/ProjectCard";
 import DataStateBanner from "../components/DataStateBanner";
 import { usePortfolioData } from "../hooks/usePortfolioData";
+import { isDemoMode } from "../config/api";
 
 function Home() {
   const { data, isLoading, source } = usePortfolioData();
@@ -24,9 +25,11 @@ function Home() {
                 <Link to="/portfolio" className="btn btn-dark btn-lg rounded-pill px-4">
                   View My Work
                 </Link>
-                <a href={profile.cvUrl} download className="btn btn-outline-dark btn-lg rounded-pill px-4">
-                  Download CV
-                </a>
+                {profile.cvUrl && (
+                  <a href={profile.cvUrl} download className="btn btn-outline-dark btn-lg rounded-pill px-4">
+                    Download CV
+                  </a>
+                )}
               </div>
             </div>
             <div className="col-lg-5">
@@ -105,8 +108,11 @@ function Home() {
           </div>
 
           {isLoading && <DataStateBanner>Loading featured case studies...</DataStateBanner>}
-          {!isLoading && source === "local" && (
+          {!isLoading && source === "local" && !isDemoMode && (
             <DataStateBanner type="warning">Showing local portfolio content while the API or database is unavailable.</DataStateBanner>
+          )}
+          {!isLoading && source === "local" && isDemoMode && (
+            <DataStateBanner type="success">Demo mode is active. Content is loaded from local portfolio data.</DataStateBanner>
           )}
 
           {featuredProjects.length > 0 ? (

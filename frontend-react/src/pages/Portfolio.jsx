@@ -3,18 +3,33 @@ import ProjectCard from "../components/ProjectCard";
 import SectionTitle from "../components/SectionTitle";
 import DataStateBanner from "../components/DataStateBanner";
 import { usePortfolioData } from "../hooks/usePortfolioData";
+import { isDemoMode } from "../config/api";
 
 const filters = ["All", "UI/UX Design", "IT & Data", "Video & Game"];
 
 function Portfolio() {
   const [activeFilter, setActiveFilter] = useState("All");
+  const [searchQuery, setSearchQuery] = useState("");
   const { data, isLoading, source } = usePortfolioData();
   const projects = data.projects ?? [];
+  const normalizedQuery = searchQuery.trim().toLowerCase();
 
-  const filteredProjects =
-    activeFilter === "All"
-      ? projects
-      : projects.filter((project) => project.category === activeFilter);
+  const filteredProjects = projects.filter((project) => {
+    const matchesFilter = activeFilter === "All" || project.category === activeFilter;
+    const searchableText = [
+      project.title,
+      project.summary,
+      project.category,
+      project.year,
+      project.type,
+      project.role,
+      ...(project.tools ?? []),
+    ]
+      .join(" ")
+      .toLowerCase();
+
+    return matchesFilter && (!normalizedQuery || searchableText.includes(normalizedQuery));
+  });
 
   return (
     <main className="page-shell">
@@ -27,9 +42,27 @@ function Portfolio() {
           />
 
           {isLoading && <DataStateBanner>Loading portfolio data...</DataStateBanner>}
-          {!isLoading && source === "local" && (
+          {!isLoading && source === "local" && !isDemoMode && (
             <DataStateBanner type="warning">Using local fallback content because the API or database is not available.</DataStateBanner>
           )}
+          {!isLoading && source === "local" && isDemoMode && (
+            <DataStateBanner type="success">Demo mode is active. Projects are shown from local portfolio data.</DataStateBanner>
+          )}
+
+          <div className="portfolio-controls">
+            <label className="portfolio-search">
+              <span>Search projects</span>
+              <input
+                type="search"
+                value={searchQuery}
+                onChange={(event) => setSearchQuery(event.target.value)}
+                placeholder="Search by role, tool, or project"
+              />
+            </label>
+            <p className="portfolio-count">
+              Showing {filteredProjects.length} of {projects.length} projects
+            </p>
+          </div>
 
           <div className="filter-bar justify-content-center mb-5" role="group" aria-label="Filter projects by category">
             {filters.map((filter) => (
@@ -55,8 +88,8 @@ function Portfolio() {
             </div>
           ) : (
             <div className="empty-state">
-              <h3>No projects in this category yet.</h3>
-              <p>Try another filter or add a new case study from the database.</p>
+              <h3>No matching projects.</h3>
+              <p>Try a different filter or search keyword.</p>
             </div>
           )}
         </div>

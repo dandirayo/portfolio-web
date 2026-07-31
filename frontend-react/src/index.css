@@ -42,6 +42,15 @@ a:hover {
   color: var(--color-orange-dark);
 }
 
+.btn {
+  min-height: 2.55rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  white-space: normal;
+}
+
 button,
 input,
 select,
@@ -352,6 +361,7 @@ summary:focus-visible {
 }
 
 .project-card-body {
+  min-height: 100%;
   padding: 1.5rem;
 }
 
@@ -420,6 +430,10 @@ summary:focus-visible {
   border-top: 1px solid rgba(17, 24, 39, 0.08);
 }
 
+.project-card-actions .btn {
+  flex: 0 1 auto;
+}
+
 .evidence-note,
 .data-state {
   color: #6b7280;
@@ -465,6 +479,42 @@ summary:focus-visible {
   display: flex;
   flex-wrap: wrap;
   gap: 0.75rem;
+}
+
+.portfolio-controls {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 1rem;
+  align-items: end;
+  margin: 0.5rem 0 1.25rem;
+}
+
+.portfolio-search {
+  display: grid;
+  gap: 0.45rem;
+  max-width: 34rem;
+  font-weight: 800;
+  color: #111827;
+}
+
+.portfolio-search span,
+.portfolio-count {
+  color: #64748b;
+  font-size: 0.88rem;
+  font-weight: 750;
+}
+
+.portfolio-search input {
+  min-height: 3.05rem;
+  border: 1px solid rgba(17, 24, 39, 0.12);
+  border-radius: var(--radius-card);
+  background: rgba(255, 255, 255, 0.88);
+  color: #111827;
+  padding: 0.75rem 1rem;
+}
+
+.portfolio-count {
+  margin: 0;
 }
 
 .portrait-card {
@@ -694,6 +744,7 @@ summary:focus-visible {
   background: #fff;
   border: 1px solid var(--color-line);
   font-weight: 750;
+  overflow-wrap: anywhere;
 }
 
 .admin-shell {
@@ -1041,6 +1092,18 @@ summary:focus-visible {
 
   .filter-bar .btn {
     flex: 0 0 auto;
+  }
+
+  .portfolio-controls {
+    grid-template-columns: 1fr;
+  }
+
+  .portfolio-search {
+    max-width: none;
+  }
+
+  .project-card-actions .btn {
+    flex: 1 1 100%;
   }
 
   .detail-grid {

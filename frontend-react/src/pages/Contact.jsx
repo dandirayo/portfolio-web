@@ -2,6 +2,7 @@ import ContactForm from "../components/ContactForm";
 import SectionTitle from "../components/SectionTitle";
 import DataStateBanner from "../components/DataStateBanner";
 import { usePortfolioData } from "../hooks/usePortfolioData";
+import { isDemoMode } from "../config/api";
 
 function Contact() {
   const { data, isLoading, source } = usePortfolioData();
@@ -20,15 +21,18 @@ function Contact() {
                 description="Available for UI/UX design, technical support consulting, systems integration projects, and multimedia collaboration."
               />
               {isLoading && <DataStateBanner>Loading contact details...</DataStateBanner>}
-              {!isLoading && source === "local" && (
+              {!isLoading && source === "local" && !isDemoMode && (
                 <DataStateBanner type="warning">Showing local contact details while the API or database is unavailable.</DataStateBanner>
               )}
+              {!isLoading && isDemoMode && (
+                <DataStateBanner type="success">Demo mode is active. Direct email links are available while backend contact delivery is offline.</DataStateBanner>
+              )}
               <div className="contact-list mt-4">
-                <a href={`mailto:${profile.email}`}>{profile.email}</a>
-                <a href={`tel:${profile.phone}`}>{profile.phone}</a>
-                <a href={profile.linkedin} target="_blank" rel="noreferrer">linkedin.com/in/dandirayo</a>
-                <a href={profile.github} target="_blank" rel="noreferrer">github.com/dandirayo</a>
-                <span>{profile.portfolioNode}</span>
+                {profile.email && <a href={`mailto:${profile.email}`}>{profile.email}</a>}
+                {profile.phone && <a href={`tel:${profile.phone}`}>{profile.phone}</a>}
+                {profile.linkedin && <a href={profile.linkedin} target="_blank" rel="noreferrer">linkedin.com/in/dandirayo</a>}
+                {profile.github && <a href={profile.github} target="_blank" rel="noreferrer">github.com/dandirayo</a>}
+                {profile.portfolioNode && <span>{profile.portfolioNode}</span>}
               </div>
             </div>
             <div className="col-lg-7">

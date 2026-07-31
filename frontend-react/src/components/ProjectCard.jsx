@@ -9,6 +9,7 @@ function ProjectCard({ project }) {
     project.liveDemoUrl && { label: "Live Demo", url: project.liveDemoUrl },
     ...links.filter((link) => link.url),
   ].filter(Boolean);
+  const primaryEvidenceLink = evidenceLinks[0];
 
   return (
     <article className="project-card h-100">
@@ -56,15 +57,12 @@ function ProjectCard({ project }) {
           <Link to={`/portfolio/${slug}`} className="btn btn-dark btn-sm rounded-pill">
             View Case Study
           </Link>
-          {evidenceLinks.length > 0 ? (
-            evidenceLinks.map((link) => (
-              <a key={link.label} href={link.url} className="btn btn-outline-dark btn-sm rounded-pill" target="_blank" rel="noreferrer">
-                {link.label}
-              </a>
-            ))
-          ) : (
-            <span className="evidence-note">Evidence links pending.</span>
+          {primaryEvidenceLink && (
+            <a href={primaryEvidenceLink.url} className="btn btn-outline-dark btn-sm rounded-pill" target="_blank" rel="noreferrer">
+              {primaryEvidenceLink.label}
+            </a>
           )}
+          {!primaryEvidenceLink && <span className="evidence-note">Evidence pending.</span>}
         </div>
       </div>
     </article>

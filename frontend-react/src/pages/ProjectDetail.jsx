@@ -2,6 +2,7 @@ import { Link, useParams } from "react-router-dom";
 import SectionTitle from "../components/SectionTitle";
 import DataStateBanner from "../components/DataStateBanner";
 import { usePortfolioData } from "../hooks/usePortfolioData";
+import { isDemoMode } from "../config/api";
 
 function DetailList({ title, items }) {
   if (!items?.length) return null;
@@ -80,8 +81,11 @@ function ProjectDetail() {
             Back to Portfolio
           </Link>
 
-          {source === "local" && (
+          {source === "local" && !isDemoMode && (
             <DataStateBanner type="warning">Showing local fallback content because the API or database is not available.</DataStateBanner>
+          )}
+          {source === "local" && isDemoMode && (
+            <DataStateBanner type="success">Demo mode is active. This case study is loaded from local content.</DataStateBanner>
           )}
 
           <div className="row align-items-end gy-4">
@@ -169,9 +173,14 @@ function ProjectDetail() {
               title="Need the broader portfolio view?"
               description="Return to the project list to compare categories, roles, and available evidence."
             />
-            <Link to="/portfolio" className="btn btn-outline-dark rounded-pill px-4">
-              All Projects
-            </Link>
+            <div className="d-flex flex-wrap gap-2">
+              <Link to="/portfolio" className="btn btn-outline-dark rounded-pill px-4">
+                All Projects
+              </Link>
+              <Link to="/contact" className="btn btn-dark rounded-pill px-4">
+                Discuss a Project
+              </Link>
+            </div>
           </div>
         </div>
       </section>

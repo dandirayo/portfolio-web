@@ -34,12 +34,16 @@ function About() {
                 I hold a Bachelor's degree in Computer Science from Bina Nusantara University and build my career across UI/UX design, L2 technical support, game prototyping, data analytics, and multimedia production. My strength is connecting user-facing clarity with technical execution.
               </p>
               <div className="d-flex flex-wrap gap-3 mt-4">
-                <a href={profile.cvUrl} target="_blank" rel="noreferrer" className="btn btn-dark rounded-pill px-4">
-                  Open CV
-                </a>
-                <a href={profile.linkedin} target="_blank" rel="noreferrer" className="btn btn-outline-dark rounded-pill px-4">
-                  LinkedIn
-                </a>
+                {profile.cvUrl && (
+                  <a href={profile.cvUrl} target="_blank" rel="noreferrer" className="btn btn-dark rounded-pill px-4">
+                    Open CV
+                  </a>
+                )}
+                {profile.linkedin && (
+                  <a href={profile.linkedin} target="_blank" rel="noreferrer" className="btn btn-outline-dark rounded-pill px-4">
+                    LinkedIn
+                  </a>
+                )}
               </div>
             </div>
           </div>
