@@ -1,9 +1,11 @@
 import SectionTitle from "../components/SectionTitle";
 import { usePortfolioData } from "../hooks/usePortfolioData";
+import { getProfileVisual } from "../utils/profileVisual";
 
 function About() {
   const { data } = usePortfolioData();
   const { profile, skillGroups, timeline } = data;
+  const portrait = getProfileVisual(profile);
 
   return (
     <main className="page-shell">
@@ -14,12 +16,13 @@ function About() {
               <div className="portrait-card">
                 <img
                   className="portrait-image"
-                  src={profile.image}
-                  alt="Temporary profile visual for Dandi Prayogatama"
+                  src={portrait.src}
+                  alt={portrait.alt}
                   loading="lazy"
                   width="640"
                   height="720"
                 />
+                {portrait.isPlaceholder && <small className="visual-disclaimer">Conceptual profile illustration</small>}
                 <p className="mb-0">
                   A portfolio shaped around reliable systems, clear interfaces, and practical creative execution.
                 </p>

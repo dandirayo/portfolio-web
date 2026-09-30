@@ -3,6 +3,7 @@ import SectionTitle from "../components/SectionTitle";
 import DataStateBanner from "../components/DataStateBanner";
 import { usePortfolioData } from "../hooks/usePortfolioData";
 import { isDemoMode } from "../config/api";
+import { getCategoryLabel } from "../data/projectCategories";
 
 function DetailList({ title, items }) {
   if (!items?.length) return null;
@@ -90,7 +91,7 @@ function ProjectDetail() {
 
           <div className="row align-items-end gy-4">
             <div className="col-lg-8">
-              <span className="eyebrow">{project.category}</span>
+              <span className="eyebrow">{getCategoryLabel(project.category)}</span>
               <h1>{project.title}</h1>
               <p>{project.summary}</p>
             </div>

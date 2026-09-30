@@ -1,69 +1,46 @@
 import { useState } from "react";
-import { Link, NavLink, useLocation } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { profile } from "../data/portfolioData";
+import { getProfileVisual } from "../utils/profileVisual";
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
-  const location = useLocation();
+  const [searchQuery, setSearchQuery] = useState("");
+  const navigate = useNavigate();
+  const portrait = getProfileVisual(profile);
   const closeMenu = () => setIsOpen(false);
+  const navLinkClass = ({ isActive }) => `site-nav-link${isActive ? " active" : ""}`;
 
-  const navLinkClass = ({ isActive }) => `nav-link ${isActive ? "active" : ""}`;
+  const handleSearch = (event) => {
+    event.preventDefault();
+    navigate(`/portfolio?q=${encodeURIComponent(searchQuery.trim())}`);
+    closeMenu();
+  };
 
   return (
-    <nav className="navbar navbar-expand-lg fixed-top portfolio-navbar" aria-label="Primary navigation">
-      <div className="container">
-        <Link className="navbar-brand fw-bold" to="/" onClick={closeMenu}>
-          Dandi<span>.</span>
+    <header className="site-header">
+      <div className="container site-header-inner">
+        <Link className="site-brand" to="/" onClick={closeMenu} aria-label="Dandi portfolio home">
+          DANDI<span className="brand-dot">.</span><span className="brand-sticker">PORTFOLIO</span>
         </Link>
-
-        <button
-          className="navbar-toggler"
-          type="button"
-          aria-controls="mainNavbar"
-          aria-expanded={isOpen}
-          aria-label="Toggle navigation"
-          onClick={() => setIsOpen((current) => !current)}
-        >
-          <span className="navbar-toggler-icon"></span>
-        </button>
-
-        <div className={`collapse navbar-collapse ${isOpen ? "show" : ""}`} id="mainNavbar">
-          <ul className="navbar-nav ms-auto align-items-lg-center gap-lg-2">
-            <li className="nav-item">
-              <NavLink className={navLinkClass} to="/" onClick={closeMenu} end>
-                Home
-              </NavLink>
-            </li>
-            <li className="nav-item">
-              <NavLink className={navLinkClass} to="/portfolio" onClick={closeMenu}>
-                Portfolio
-              </NavLink>
-            </li>
-            <li className="nav-item">
-              <NavLink className={navLinkClass} to="/about" onClick={closeMenu}>
-                About
-              </NavLink>
-            </li>
-            <li className="nav-item">
-              <NavLink className={navLinkClass} to="/contact" onClick={closeMenu}>
-                Contact
-              </NavLink>
-            </li>
-            <li className="nav-item ms-lg-2">
-              <a
-                className="btn btn-sm btn-dark rounded-pill px-3"
-                href={profile.cvUrl}
-                download
-                aria-current={location.pathname === profile.cvUrl ? "page" : undefined}
-                onClick={closeMenu}
-              >
-                Download CV
-              </a>
-            </li>
-          </ul>
-        </div>
+        <form className="header-search" role="search" onSubmit={handleSearch}>
+          <label htmlFor="header-search-input">SEARCH WORK</label>
+          <div className="header-search-field">
+            <input id="header-search-input" type="search" value={searchQuery} onChange={(event) => setSearchQuery(event.target.value)} placeholder="Search projects..." />
+            <button type="submit" aria-label="Search projects">⌕</button>
+          </div>
+        </form>
+        <nav id="site-mobile-nav" className={`site-nav ${isOpen ? "is-open" : ""}`} aria-label="Primary navigation">
+          <NavLink className={navLinkClass} to="/" end onClick={closeMenu}>HOME</NavLink>
+          <NavLink className={navLinkClass} to="/portfolio" onClick={closeMenu}>WORK</NavLink>
+          <NavLink className={navLinkClass} to="/about" onClick={closeMenu}>ABOUT</NavLink>
+          <NavLink className={navLinkClass} to="/contact" onClick={closeMenu}>CONTACT</NavLink>
+          {profile.cvUrl && <a className="site-nav-cv" href={profile.cvUrl} download onClick={closeMenu}>CV ↓</a>}
+        </nav>
+        <Link className="header-avatar" to="/about" aria-label="About Dandi"><img src={portrait.src} alt="" /></Link>
+        <button className="site-menu-toggle" type="button" aria-label={isOpen ? "Close menu" : "Open menu"} aria-expanded={isOpen} aria-controls="site-mobile-nav" onClick={() => setIsOpen((current) => !current)}>{isOpen ? "✕" : "☰"}</button>
       </div>
-    </nav>
+    </header>
   );
 }
 
