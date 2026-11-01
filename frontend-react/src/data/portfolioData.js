@@ -1,8 +1,11 @@
+const base = import.meta.env.BASE_URL || "/";
+const cleanBase = base.endsWith("/") ? base : `${base}/`;
+
 const placeholderImages = {
-  profile: "/media/placeholders/profile-placeholder.webp",
-  uiux: "/media/placeholders/project-uiux.webp",
-  itData: "/media/placeholders/project-it-data.webp",
-  creative: "/media/placeholders/project-creative.webp",
+  profile: `${cleanBase}media/placeholders/profile-placeholder.webp`,
+  uiux: `${cleanBase}media/placeholders/project-uiux.webp`,
+  itData: `${cleanBase}media/placeholders/project-it-data.webp`,
+  creative: `${cleanBase}media/placeholders/project-creative.webp`,
 };
 
 const galleryItem = (url, alt, caption, type = "image") => ({
@@ -25,7 +28,7 @@ export const profile = {
   linkedin: "https://linkedin.com/in/dandirayo",
   github: "https://github.com/dandirayo",
   portfolioNode: "dandirayo.art",
-  cvUrl: "/cv-dandi-prayogatama.pdf",
+  cvUrl: `${cleanBase}cv-dandi-prayogatama.pdf`,
   image: placeholderImages.profile,
 };
 
