@@ -674,3 +674,251 @@ a, button, input, textarea, select { -webkit-tap-highlight-color: transparent; }
 @media (prefers-reduced-motion: reduce) {
   .project-card, .circle-action { transition: none; }
 }
+
+/* ==========================================================================
+   Coming Soon Modal & Evidence Link Buttons
+   ========================================================================== */
+.coming-soon-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(32, 39, 48, 0.65);
+  backdrop-filter: blur(4px);
+  z-index: 1050;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  animation: fadeIn 0.18s ease-out;
+}
+
+.coming-soon-card {
+  background: var(--paper, #fffefa);
+  border: 2px solid var(--ink, #202730);
+  border-radius: 20px;
+  box-shadow: 6px 6px 0 var(--ink, #202730);
+  max-width: 480px;
+  width: 100%;
+  padding: 32px 28px;
+  text-align: center;
+  position: relative;
+  animation: slideUp 0.22s ease-out;
+}
+
+.coming-soon-badge {
+  display: inline-block;
+  background: var(--lemon, #f8ed50);
+  border: 1.5px solid var(--ink, #202730);
+  border-radius: 999px;
+  padding: 4px 14px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  margin-bottom: 14px;
+}
+
+.coming-soon-icon {
+  font-size: 42px;
+  margin-bottom: 12px;
+  line-height: 1;
+}
+
+.coming-soon-heading {
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--ink, #202730);
+  margin-bottom: 8px;
+}
+
+.coming-soon-subheading {
+  font-size: 14px;
+  color: var(--color-muted, #59616b);
+  margin-bottom: 14px;
+}
+
+.coming-soon-text {
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--ink, #202730);
+  margin-bottom: 24px;
+  background: var(--color-cream, #f7f4e9);
+  padding: 12px 16px;
+  border-radius: 12px;
+  border: 1px dashed var(--ink, #202730);
+}
+
+.coming-soon-actions {
+  display: flex;
+  justify-content: center;
+}
+
+.evidence-coming-soon-btn {
+  background: var(--paper, #fffefa);
+  color: var(--ink, #202730);
+  border: 1.5px solid var(--ink, #202730);
+  border-radius: 999px;
+  padding: 6px 14px;
+  font-size: 12px;
+  font-weight: 750;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: all 0.15s ease;
+  box-shadow: 2px 2px 0 var(--ink, #202730);
+}
+
+.evidence-coming-soon-btn:hover {
+  background: var(--lemon, #f8ed50);
+  transform: translate(-1px, -1px);
+  box-shadow: 3px 3px 0 var(--ink, #202730);
+}
+
+/* ==========================================================================
+   Contact Gate & Reveal System (Hide Contact Info until Email Request)
+   ========================================================================== */
+.contact-gate-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.contact-masked-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 18px !important;
+  font-weight: 700;
+  font-size: 13.5px;
+}
+
+.contact-masked-icon {
+  margin-right: 8px;
+}
+
+.contact-masked-text {
+  flex: 1;
+  color: var(--color-muted, #59616b);
+  letter-spacing: 0.05em;
+}
+
+.contact-masked-tag {
+  background: var(--lilac, #beb5eb);
+  border: 1px solid var(--ink, #202730);
+  border-radius: 999px;
+  padding: 2px 10px;
+  font-size: 10.5px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.contact-unlock-box {
+  background: var(--paper, #fffefa);
+  border: 1.5px solid var(--ink, #202730);
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 3px 3px 0 var(--ink, #202730);
+}
+
+.contact-unlock-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.contact-unlock-icon {
+  font-size: 18px;
+}
+
+.contact-unlock-title {
+  font-size: 16px;
+  font-weight: 800;
+  margin: 0;
+  color: var(--ink, #202730);
+}
+
+.contact-unlock-desc {
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--color-muted, #59616b);
+  margin-bottom: 14px;
+}
+
+.contact-unlock-form .input-group {
+  border-radius: 999px;
+  overflow: hidden;
+  border: 1.5px solid var(--ink, #202730);
+}
+
+.contact-unlock-form .form-control {
+  border: none;
+  font-size: 13px;
+  padding: 10px 16px;
+  background: #fff;
+}
+
+.contact-unlock-form .form-control:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.contact-unlock-form .btn {
+  border: none;
+  border-left: 1.5px solid var(--ink, #202730);
+  border-radius: 0;
+  font-size: 13px;
+  font-weight: 750;
+  background: var(--blue, #3c59c8);
+  color: #fff;
+}
+
+.contact-unlock-form .btn:hover {
+  background: var(--ink, #202730);
+}
+
+.contact-unlock-error {
+  color: var(--coral, #ff7d6c);
+  font-size: 12px;
+  font-weight: 700;
+  margin-top: 6px;
+}
+
+.contact-unlocked-badge {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--mint, #a9ead8);
+  border: 1.5px solid var(--ink, #202730);
+  border-radius: 12px;
+  padding: 8px 14px;
+  font-size: 12px;
+  font-weight: 750;
+  margin-bottom: 12px;
+}
+
+.btn-link-lock {
+  background: none;
+  border: none;
+  color: var(--ink, #202730);
+  text-decoration: underline;
+  font-size: 11.5px;
+  cursor: pointer;
+  padding: 0;
+  font-weight: 700;
+}
+
+.contact-reveal-item {
+  background: #e8e5fb !important;
+  font-weight: 800 !important;
+  animation: fadeIn 0.25s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}

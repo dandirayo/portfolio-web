@@ -1,7 +1,9 @@
 import { Link } from "react-router-dom";
 import { getCategoryLabel } from "../data/projectCategories";
+import { useComingSoon } from "../hooks/useComingSoon";
 
 function ProjectCard({ project }) {
+  const { openComingSoon } = useComingSoon();
   const slug = project.slug || project.id;
   const isPlaceholder = project.image?.includes("/media/placeholders/");
   const evidenceLinks = [
@@ -31,8 +33,18 @@ function ProjectCard({ project }) {
         <div className="tag-list">{(project.tools ?? []).slice(0, 4).map((tool) => <span key={tool}>{tool}</span>)}</div>
         <div className="project-card-actions">
           <Link to={`/portfolio/${slug}`} className="project-link">VIEW CASE STUDY <span aria-hidden="true">↗︎</span></Link>
-          {primaryEvidenceLink && <a href={primaryEvidenceLink.url} target="_blank" rel="noreferrer">{primaryEvidenceLink.label} ↗︎</a>}
-          {!primaryEvidenceLink && <span className="evidence-note">Evidence pending</span>}
+          {primaryEvidenceLink ? (
+            <a href={primaryEvidenceLink.url} target="_blank" rel="noreferrer">{primaryEvidenceLink.label} ↗︎</a>
+          ) : (
+            <button
+              type="button"
+              className="evidence-coming-soon-btn"
+              onClick={() => openComingSoon(project.title, "Live Demo / Repository")}
+              title="Lihat status tautan proyek"
+            >
+              Demo / Bukti ↗︎
+            </button>
+          )}
         </div>
       </div>
     </article>

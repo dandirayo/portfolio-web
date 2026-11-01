@@ -4,6 +4,7 @@ import DataStateBanner from "../components/DataStateBanner";
 import { usePortfolioData } from "../hooks/usePortfolioData";
 import { isDemoMode } from "../config/api";
 import { getCategoryLabel } from "../data/projectCategories";
+import { useComingSoon } from "../hooks/useComingSoon";
 
 function DetailList({ title, items }) {
   if (!items?.length) return null;
@@ -22,6 +23,7 @@ function DetailList({ title, items }) {
 
 function ProjectDetail() {
   const { slug } = useParams();
+  const { openComingSoon } = useComingSoon();
   const { data, isLoading, source } = usePortfolioData();
   const projects = data.projects ?? [];
   const project = projects.find((item) => item.slug === slug || item.id === slug);
@@ -150,7 +152,7 @@ function ProjectDetail() {
             <DetailList title="Results" items={project.results} />
             <DetailList title="Lessons Learned" items={project.lessonsLearned} />
             <section className="detail-panel">
-              <h2>Evidence</h2>
+              <h2>Evidence & Demo</h2>
               {evidenceLinks.length > 0 ? (
                 <div className="d-flex flex-wrap gap-2">
                   {evidenceLinks.map((link) => (
@@ -160,9 +162,27 @@ function ProjectDetail() {
                   ))}
                 </div>
               ) : (
-                <p>
-                  External evidence is not available yet. GitHub, live demo, Figma, approved video, or PDF links can be added when the assets are ready.
-                </p>
+                <div>
+                  <div className="d-flex flex-wrap gap-2 mb-3">
+                    <button
+                      type="button"
+                      className="btn btn-dark rounded-pill px-3"
+                      onClick={() => openComingSoon(project.title, "Live Demo")}
+                    >
+                      Live Demo ↗
+                    </button>
+                    <button
+                      type="button"
+                      className="btn btn-outline-dark rounded-pill px-3"
+                      onClick={() => openComingSoon(project.title, "Source Code / Repository")}
+                    >
+                      GitHub Repository ↗
+                    </button>
+                  </div>
+                  <p className="text-muted small mb-0">
+                    Tautan publik proyek ini sedang dipersiapkan. Klik tombol di atas untuk cek status.
+                  </p>
+                </div>
               )}
             </section>
           </div>

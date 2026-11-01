@@ -1,6 +1,7 @@
 import ContactForm from "../components/ContactForm";
 import SectionTitle from "../components/SectionTitle";
 import DataStateBanner from "../components/DataStateBanner";
+import ContactGate from "../components/ContactGate";
 import { usePortfolioData } from "../hooks/usePortfolioData";
 import { isDemoMode } from "../config/api";
 
@@ -25,15 +26,9 @@ function Contact() {
                 <DataStateBanner type="warning">Showing local contact details while the API or database is unavailable.</DataStateBanner>
               )}
               {!isLoading && isDemoMode && (
-                <DataStateBanner type="success">Demo mode is active. Direct email links are available while backend contact delivery is offline.</DataStateBanner>
+                <DataStateBanner type="success">Demo mode is active. Contact form delivers directly or provides email unlock.</DataStateBanner>
               )}
-              <div className="contact-list mt-4">
-                {profile.email && <a href={`mailto:${profile.email}`}>{profile.email}</a>}
-                {profile.phone && <a href={`tel:${profile.phone}`}>{profile.phone}</a>}
-                {profile.linkedin && <a href={profile.linkedin} target="_blank" rel="noreferrer">linkedin.com/in/dandirayo</a>}
-                {profile.github && <a href={profile.github} target="_blank" rel="noreferrer">github.com/dandirayo</a>}
-                {profile.portfolioNode && <span>{profile.portfolioNode}</span>}
-              </div>
+              <ContactGate profile={profile} />
             </div>
             <div className="col-lg-7">
               <ContactForm fallbackEmail={profile.email} />
