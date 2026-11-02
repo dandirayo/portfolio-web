@@ -11,9 +11,11 @@ import ScrollToTop from "./components/ScrollToTop";
 import { ComingSoonProvider } from "./context/ComingSoonProvider";
 
 function App() {
+  const normalizedBasename = import.meta.env.BASE_URL?.replace(/\/+$/, "") || "/";
+
   return (
     <ComingSoonProvider>
-      <Router basename={import.meta.env.BASE_URL}>
+      <Router basename={normalizedBasename}>
         <ScrollToTop />
         <Navbar />
         <Routes>
